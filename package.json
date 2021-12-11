@@ -1,20 +1,72 @@
 {
   "name": "otus-javascript-weather-forecast",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "description": "OTUS Javascript Weather Forecast App",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ntl",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
+    "prepare": "husky install",
+    "build": "webpack build --mode=production",
+    "dev": "webpack serve --open"
+  },
+  "ntl": {
+    "descriptions": {
+      "start": "Script for starts \"ntl\" instead of \"start\"",
+      "test": "Run tests",
+      "test:coverage": "Run tests with coverage",
+      "lint": "Find problems with code",
+      "lint:fix": "Find and fix problems with code",
+      "prettier": "Check code format in files",
+      "prettier:fix": "Format code in files",
+      "prepare": "Install husky",
+      "build": "Build bundle from project in production mode",
+      "dev": "Start Webpack Dev Server"
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Alexey Sidorov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/issues"
   },
-  "homepage": "https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast#readme"
+  "homepage": "https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@types/jest": "^27.0.2",
+    "babel-jest": "^27.3.1",
+    "css-loader": "^6.5.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.2",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "lint-staged": "^11.2.6",
+    "mini-css-extract-plugin": "^2.4.5",
+    "ntl": "^5.1.0",
+    "prettier": "^2.4.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md,yml}": "prettier --write"
+  }
 }
