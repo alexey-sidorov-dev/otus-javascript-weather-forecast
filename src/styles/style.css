@@ -1,6 +1,8 @@
 body {
-  background-color: aquamarine;
+  background: linear-gradient(#1360ad, #32b2db) fixed;
 }
 h1 {
   text-align: center;
+  color: #ffffff;
+  font-size: 48px;
 }
