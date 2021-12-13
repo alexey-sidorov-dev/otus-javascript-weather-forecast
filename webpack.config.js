@@ -2,11 +2,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const path = require("path");
-const NODE_ENV = process.env.NODE_ENV;
+
+const { NODE_ENV } = process.env;
 
 module.exports = {
   entry: path.resolve(__dirname, "src/index.js"),
-  devtool: NODE_ENV === "production" ? "nosources-source-map" : "eval-source-map",
+  devtool:
+    NODE_ENV === "production" ? "nosources-source-map" : "eval-source-map",
   mode: NODE_ENV === "production" ? "production" : "development",
 
   module: {
