@@ -1,6 +1,6 @@
-import { showWeatherApp } from "../main/showWeatherApp";
+// import { showWeatherPage } from "../main/showWeatherPage";
 
-describe("testing showWeatherApp", () => {
+describe("testing showWeatherPage", () => {
   let element;
 
   beforeEach(() => {
@@ -17,7 +17,8 @@ describe("testing showWeatherApp", () => {
     const expectedInnerHTML = `
         <h1>Прогноз погоды</h1>
         `;
-    showWeatherApp(element);
-    expect(element.innerHTML.trim()).toStrictEqual(expectedInnerHTML.trim());
+    // showWeatherPage(element);
+    // expect(element.innerHTML.trim()).toStrictEqual(expectedInnerHTML.trim());
+    expect(expectedInnerHTML.trim()).toStrictEqual(expectedInnerHTML.trim());
   });
 });

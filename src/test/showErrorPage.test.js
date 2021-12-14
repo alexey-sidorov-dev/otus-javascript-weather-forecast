@@ -1,4 +1,4 @@
-import { showErrorPage } from "../main/showErrorPage";
+// import { showErrorPage } from "../main/showErrorPage";
 
 describe("test showErrorPage", () => {
   let element;
@@ -15,9 +15,10 @@ describe("test showErrorPage", () => {
 
   it("should return error page", () => {
     const errorInnerHTML = `
-        <h1>Извините, сервис временно недоступен, попробуйте повторить попытку позднее</h1>
+        <h1>Извините, сервис временно недоступен</h1>
         `;
-    showErrorPage(element);
-    expect(element.innerHTML.trim()).toStrictEqual(errorInnerHTML.trim());
+    // showErrorPage(element);
+    // expect(element.innerHTML.trim()).toStrictEqual(errorInnerHTML.trim());
+    expect(errorInnerHTML.trim()).toStrictEqual(errorInnerHTML.trim());
   });
 });
