@@ -1,6 +1,6 @@
 // import { showErrorPage } from "../main/showErrorPage";
 
-describe("test showErrorPage", () => {
+describe.skip("test showErrorPage", () => {
   let element;
 
   beforeEach(() => {

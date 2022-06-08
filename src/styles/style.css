@@ -1,20 +1,26 @@
 @font-face {
-  font-family: "Roboto";
+  font-family: Roboto;
   src: url("../fonts/Roboto-Bold.ttf") format("ttf"),
     url("../fonts/Roboto-Light.ttf") format("ttf"),
     url("../fonts/Roboto-Regular.ttf") format("ttf");
 }
-.main-app {
+
+* {
+  border: 1px solid red;
+}
+
+.app-main {
   width: 100vw;
   height: 100vh;
 }
-.weather-page {
+
+.weather .error {
   background: linear-gradient(#1360ad, #32b2db) fixed;
 }
 
-.error-page {
+/* .error {
   background: linear-gradient(#505152, #9a9b9c) fixed;
-}
+} */
 
 h1 {
   /* position: absolute;
@@ -24,13 +30,14 @@ left: 246px;
 top: 11px; */
 
   text-align: center;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 35px;
   line-height: 41px;
-  color: #ffffff;
+  color: #fff;
 }
+
 p {
   position: absolute;
   left: 20%;
@@ -44,6 +51,7 @@ p {
 .sad-cloud {
   content: url("../images/sad_cloud.svg");
   display: block;
+
   /* height: 450px;
   width: 400px; */
   position: absolute;
@@ -57,13 +65,13 @@ p {
 }
 
 .sad-cloud:hover {
-  transform: scale(2);
+  transform: scale(0.5);
 }
 
 .sad-cloud::after {
-  content: "Тут было грустное облачко, но теперь оно грустит в другом месте :(";
+  content: "Sad cloud was here but it flew away :(";
 }
 
 .weather-icon::after {
-  content: "Иконка погоды";
+  content: "Weather icon";
 }

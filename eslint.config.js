@@ -14,6 +14,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
+  plugins: ["jest"],
   rules: {
     "import/prefer-default-export": "off",
     "no-console": "off",
@@ -26,5 +27,4 @@ module.exports = {
       { functions: false, classes: true, variables: true },
     ],
   },
-  plugins: ["jest"],
 };

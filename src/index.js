@@ -1,14 +1,8 @@
-import { showWeatherPage } from "./main/showWeatherPage";
-import { showErrorPage } from "./main/showErrorPage";
+import { runApp } from "./app/runApp";
 import "modern-css-reset";
 import "./styles/style.css";
 
 (async () => {
-  const element = document.querySelector(".main-app");
-  try {
-    await showWeatherPage(element);
-  } catch (err) {
-    showErrorPage(element);
-    console.error(err);
-  }
+  const app = document.querySelector("#app");
+  await runApp(app);
 })();
