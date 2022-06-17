@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["stylelint-config-standard", "stylelint-config-prettier"],
+  extends: ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
   rules: {
     "selector-class-pattern":
       "^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(_([a-z0-9]+-?)+){0,2}?$",

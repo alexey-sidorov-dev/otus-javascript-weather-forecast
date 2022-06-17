@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const LodashWebpackPlugin = require("lodash-webpack-plugin");
 const path = require("path");
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -17,17 +18,15 @@ module.exports = {
         exclude: /(node_modules)/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
         },
       },
 
       {
-        test: /\.css$/i,
+        test: /\.(sc|c)ss$/i,
         use: [
           devMode ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
+          "sass-loader",
         ],
       },
 
@@ -97,6 +96,7 @@ module.exports = {
               },
             ],
           }),
+          new LodashWebpackPlugin(),
         ]
   ),
 };

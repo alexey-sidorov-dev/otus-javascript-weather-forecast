@@ -1,5 +1,4 @@
-import isArray from "lodash/isArray";
-import without from "lodash/without";
+import { isArray, without } from "lodash";
 
 export class History {
   constructor() {

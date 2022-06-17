@@ -1,0 +1,16 @@
+$bg-color: rgb(246 248 250);
+$text-color: black;
+$border-color: lightgray;
+
+.search-form {
+  &__input {
+    background-color: $bg-color;
+  }
+
+  &__button {
+    color: $text-color;
+    background-color: $bg-color;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+  }
+}

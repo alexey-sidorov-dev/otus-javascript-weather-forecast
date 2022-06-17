@@ -3,8 +3,9 @@
 Приложение "Прогноз погоды".
 
 [![Actions Status](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/workflows/PR%20Sanity%20Check/badge.svg)](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/actions)
+[![Actions Status](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/workflows/Add%20CodeSandbox%20link/badge.svg)](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/actions)
 [![Actions Status](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/workflows/Coverage/badge.svg)](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/actions)
-[![Actions Status](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/workflows/Deploy%20to%20Github%20Pages/badge.svg)](https://alexey-sidorov-dev.github.io/otus-javascript-weather-forecast)
+[![Actions Status](https://github.com/alexey-sidorov-dev/otus-javascript-weather-forecast/workflows/Deploy%20to%20Github%20Pages/badge.svg)](https://alexey-sidorov-dev.github.io/otus-javascript-weather-forecast/)
 [![LICENSE](https://img.shields.io/badge/license-MIT-brightgreen.svg)](MIT)
 
 // TODO:

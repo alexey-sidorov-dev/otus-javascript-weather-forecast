@@ -1,7 +1,8 @@
 import { History } from "./History";
 
-export function displayHistory() {
+export function displayHistory(element) {
   const history = new History();
-
-  return `<span>${JSON.stringify(history.data)}</span>`;
+  element.innerHTML = `<span>История поиска: ${JSON.stringify(
+    history.data
+  )}</span>`;
 }

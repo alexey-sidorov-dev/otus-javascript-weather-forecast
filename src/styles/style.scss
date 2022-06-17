@@ -1,12 +1,24 @@
-@font-face {
-  font-family: Roboto;
-  src: url("../fonts/Roboto-Bold.ttf") format("ttf"),
-    url("../fonts/Roboto-Light.ttf") format("ttf"),
-    url("../fonts/Roboto-Regular.ttf") format("ttf");
+@import "./fonts";
+@import "./search";
+
+div {
+  border: 1px solid red;
 }
 
-* {
-  border: 1px solid red;
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.main-wrapper {
+  width: 50%;
+  height: auto;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-main {
@@ -32,7 +44,7 @@ top: 11px; */
   text-align: center;
   font-family: Roboto, sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 35px;
   line-height: 41px;
   color: #fff;
