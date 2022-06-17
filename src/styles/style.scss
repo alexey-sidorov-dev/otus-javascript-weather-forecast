@@ -1,0 +1,89 @@
+@import "./fonts";
+@import "./search";
+
+div {
+  border: 1px solid red;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.main-wrapper {
+  width: 50%;
+  height: auto;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.weather .error {
+  background: linear-gradient(#1360ad, #32b2db) fixed;
+}
+
+/* .error {
+  background: linear-gradient(#505152, #9a9b9c) fixed;
+} */
+
+h1 {
+  /* position: absolute;
+width: 269px;
+height: 41px;
+left: 246px;
+top: 11px; */
+
+  text-align: center;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 41px;
+  color: #fff;
+}
+
+p {
+  position: absolute;
+  left: 20%;
+}
+
+.weather-icon {
+  position: absolute;
+  left: 20%;
+}
+
+.sad-cloud {
+  content: url("../images/sad_cloud.svg");
+  display: block;
+
+  /* height: 450px;
+  width: 400px; */
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  margin: 0 auto;
+  transition-duration: 0.75s;
+  transition-property: transform;
+  cursor: pointer;
+  alt: "ALT";
+}
+
+.sad-cloud:hover {
+  transform: scale(0.5);
+}
+
+.sad-cloud::after {
+  content: "Sad cloud was here but it flew away :(";
+}
+
+.weather-icon::after {
+  content: "Weather icon";
+}
