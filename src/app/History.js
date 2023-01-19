@@ -1,24 +1,27 @@
-import { isArray, without } from "lodash";
+import { pull } from "lodash";
 
 export class History {
-  constructor() {
-    const data = JSON.parse(window.localStorage.getItem("history"));
-    this.data = data && isArray(data) ? data : [];
-    console.log(this.data);
+  constructor(config) {
+    this.identifier = config.historyIdentifier;
+    this.count = config.historyCount;
   }
 
-  addItem(item) {
-    this.data = this.data.push(item);
-    window.localStorage.setItem("history", JSON.stringify(this.data));
+  read() {
+    const data = localStorage.getItem(this.identifier);
+    return data ? JSON.parse(data) : [];
   }
 
-  deleteItem(item) {
-    this.data = without(this.data, item);
-    window.localStorage.setItem("history", JSON.stringify(this.data));
+  update(city) {
+    const data = this.read();
+    pull(data, city);
+    data.unshift(city);
+    localStorage.setItem(
+      this.identifier,
+      JSON.stringify(data.slice(0, this.count))
+    );
   }
 
-  clearAll() {
-    this.data = [];
-    window.localStorage.removeItem("history");
+  clear() {
+    localStorage.removeItem(this.identifier);
   }
 }

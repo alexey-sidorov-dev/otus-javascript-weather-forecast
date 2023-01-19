@@ -1,12 +1,14 @@
-import { getGeoData } from "../app/getGeoData";
+import { Geo } from "../app/Geo";
+import { Config } from "../app/Config";
 import { HttpError } from "../utils/HttpError";
 import { NoErrorThrownError } from "../utils/NoErrorThrownError";
 import { getError } from "../utils/helpers";
 
-describe("getGeoData", () => {
-  const apiKey = "f8577df470f44c429232a2419bf5dc99";
-  const url = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}`;
+describe("Geo", () => {
   let fetchMock;
+  const config = new Config();
+  const apiUrl = config.geoApiUrl;
+  const geo = new Geo(config);
 
   beforeAll(() => {
     global.fetch = jest.fn();
@@ -22,12 +24,11 @@ describe("getGeoData", () => {
       Promise.resolve({ json: () => Promise.resolve({}), ok: true })
     );
 
-    await getGeoData();
-    expect(fetchMock).toHaveBeenCalledWith(url);
+    await geo.getGeo();
+    expect(fetchMock).toHaveBeenCalledWith(`${apiUrl}`);
   });
 
   it("should return geo data for successful request", async () => {
-    // TODO: add country name - ?
     const expected = {
       city: "Moscow",
       latitude: "55.68455",
@@ -38,7 +39,7 @@ describe("getGeoData", () => {
       Promise.resolve({ json: () => Promise.resolve(expected), ok: true })
     );
 
-    const result = await getGeoData();
+    const result = await geo.getGeo();
     expect(result).toStrictEqual(expected);
   });
 
@@ -47,7 +48,7 @@ describe("getGeoData", () => {
       Promise.resolve({ json: () => Promise.resolve({}), ok: false })
     );
 
-    const error = await getError(async () => getGeoData());
+    const error = await getError(async () => geo.getGeo());
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(HttpError);
   });

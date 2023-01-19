@@ -1,5 +1,5 @@
 module.exports = (api) => ({
-  plugins: ["lodash", "@babel/plugin-transform-runtime"],
+  plugins: ["lodash"],
   presets: [
     [
       "@babel/preset-env",

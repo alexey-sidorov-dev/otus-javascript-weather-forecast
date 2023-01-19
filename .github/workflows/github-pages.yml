@@ -11,7 +11,7 @@ jobs:
 
       - name: Install Packages
         run: |
-          npm ci
+          npm install
 
       - name: Build
         run: |

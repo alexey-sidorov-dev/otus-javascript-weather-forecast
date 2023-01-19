@@ -1,24 +1,30 @@
-@import "./fonts";
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap";
 @import "./search";
+@import "./history";
+@import "./osm";
 
+/*
 div {
   border: 1px solid red;
 }
-
-.app-wrapper {
+*/
+.app {
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
 }
 
-.main-wrapper {
+.widget {
+  border: 1px solid gray;
   width: 50%;
   height: auto;
   align-items: center;
   align-self: center;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  justify-content: space-around;
 }
 
 .app-main {
@@ -45,45 +51,25 @@ top: 11px; */
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 35px;
-  line-height: 41px;
-  color: #fff;
+  font-size: 2rem;
+  line-height: 1.5;
+
+  // color: #fff;
 }
 
 p {
-  position: absolute;
+  /* position: absolute; */
   left: 20%;
 }
 
-.weather-icon {
-  position: absolute;
-  left: 20%;
+.weather__icon {
+  /* position: absolute; */
+  width: 2rem;
+  height: 2rem;
+
+  /* left: 20%; */
 }
 
-.sad-cloud {
-  content: url("../images/sad_cloud.svg");
-  display: block;
-
-  /* height: 450px;
-  width: 400px; */
-  position: absolute;
-  top: 20%;
-  left: 40%;
-  margin: 0 auto;
-  transition-duration: 0.75s;
-  transition-property: transform;
-  cursor: pointer;
-  alt: "ALT";
-}
-
-.sad-cloud:hover {
-  transform: scale(0.5);
-}
-
-.sad-cloud::after {
-  content: "Sad cloud was here but it flew away :(";
-}
-
-.weather-icon::after {
-  content: "Weather icon";
+.weather__icon::after {
+  content: "icon";
 }

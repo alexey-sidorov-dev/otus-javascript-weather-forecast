@@ -2,7 +2,7 @@ $bg-color: rgb(246 248 250);
 $text-color: black;
 $border-color: lightgray;
 
-.search-form {
+.search {
   &__input {
     background-color: $bg-color;
   }
@@ -12,5 +12,13 @@ $border-color: lightgray;
     background-color: $bg-color;
     border: 1px solid $border-color;
     border-radius: 6px;
+
+    &:hover {
+      background-color: lightgray;
+    }
+
+    &:focus {
+      // background-color: lightcyan;
+    }
   }
 }

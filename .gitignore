@@ -1,6 +1,7 @@
 .idea
 .vscode
 .eslintcache
+.stylelintcache
 node_modules
 build
 dist
