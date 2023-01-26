@@ -1,9 +1,11 @@
 @import "./colors";
 
+$border-radius: 6px;
+
 .search {
   &__input {
     background-color: $bg-color;
-    border-radius: 6px;
+    border-radius: $border-radius;
     border: 2px solid $main-color;
     outline: none;
 
@@ -17,7 +19,7 @@
     color: white;
     background-color: $main-color;
     border: 2px solid $main-color;
-    border-radius: 6px;
+    border-radius: $border-radius;
     cursor: pointer;
 
     &:hover {
@@ -32,7 +34,7 @@
   }
 
   &__info {
-    margin: 0.5rem;
+    margin: 1rem;
   }
 }
 
@@ -42,7 +44,6 @@
   font-style: italic;
 
   &__info {
-    size: 2rem;
     color: $second-color;
   }
 
