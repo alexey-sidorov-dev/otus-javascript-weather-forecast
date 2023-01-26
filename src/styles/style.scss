@@ -1,75 +1,29 @@
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap";
+@import "./widget";
 @import "./search";
 @import "./history";
-@import "./osm";
+@import "./map";
 
-/*
-div {
-  border: 1px solid red;
-}
-*/
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   justify-content: center;
-}
-
-.widget {
-  border: 1px solid gray;
-  width: 50%;
-  height: auto;
   align-items: center;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: space-around;
-}
-
-.app-main {
   width: 100vw;
   height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.weather .error {
-  background: linear-gradient(#1360ad, #32b2db) fixed;
+.top {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* .error {
-  background: linear-gradient(#505152, #9a9b9c) fixed;
-} */
-
-h1 {
-  /* position: absolute;
-width: 269px;
-height: 41px;
-left: 246px;
-top: 11px; */
-
-  text-align: center;
-  font-family: Roboto, sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 1.5;
-
-  // color: #fff;
-}
-
-p {
-  /* position: absolute; */
-  left: 20%;
-}
-
-.weather__icon {
-  /* position: absolute; */
-  width: 2rem;
-  height: 2rem;
-
-  /* left: 20%; */
-}
-
-.weather__icon::after {
-  content: "icon";
+.bottom {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -25,7 +25,6 @@ describe("Map", () => {
     const mapElement = document.createElement("div");
     mapElement.setAttribute("id", "map");
     document.body.append(mapElement);
-
     const error = await getError(() => {
       map.displayMap({ latitude: 51.513 });
     });
@@ -50,6 +49,7 @@ describe("Map", () => {
     const mapElement = document.createElement("div");
     mapElement.setAttribute("id", "map");
     document.body.append(mapElement);
+
     const error = await getError(() =>
       map.displayMap({ latitude: 51.513, longitude: -0.09 })
     );

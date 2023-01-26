@@ -7,8 +7,8 @@ export class Config {
     this.weatherApiKey = "a3ec23828a024080b68d50315d06d2f9";
     this.weatherApiUrl = `https://api.weatherbit.io/v2.0/current`;
     this.mapContainerId = "map";
-    this.mapInitZoom = 13;
-    this.mapMaxZoom = 19;
+    this.mapInitZoom = 10;
+    this.mapMaxZoom = 17;
     this.historyIdentifier = "weather";
     this.historyCount = 10;
   }

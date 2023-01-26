@@ -1,24 +1,52 @@
-$bg-color: rgb(246 248 250);
-$text-color: black;
-$border-color: lightgray;
+@import "./colors";
 
 .search {
   &__input {
     background-color: $bg-color;
+    border-radius: 6px;
+    border: 2px solid $main-color;
+    outline: none;
+
+    &:focus {
+      border: 2px solid $second-color;
+    }
   }
 
   &__button {
-    color: $text-color;
-    background-color: $bg-color;
-    border: 1px solid $border-color;
+    margin: 0.5rem;
+    color: white;
+    background-color: $main-color;
+    border: 2px solid $main-color;
     border-radius: 6px;
+    cursor: pointer;
 
     &:hover {
-      background-color: lightgray;
+      background-color: $second-color;
+      border: 2px solid $second-color;
     }
 
-    &:focus {
-      // background-color: lightcyan;
+    &:active {
+      background-color: $second-color;
+      transform: translateY(1px);
     }
+  }
+
+  &__info {
+    margin: 0.5rem;
+  }
+}
+
+.search-info {
+  text-align: center;
+  font-size: 1rem;
+  font-style: italic;
+
+  &__info {
+    size: 2rem;
+    color: $second-color;
+  }
+
+  &__error {
+    color: $error-color;
   }
 }

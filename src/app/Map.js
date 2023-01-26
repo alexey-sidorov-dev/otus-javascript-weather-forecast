@@ -1,4 +1,4 @@
-import { map, tileLayer, marker, LatLng } from "leaflet";
+import { map, tileLayer, LatLng } from "leaflet";
 import { isObject } from "lodash";
 import { DataError } from "../utils/DataError";
 
@@ -19,14 +19,14 @@ export class Map {
     this.map = this.map || map(mapElement);
   }
 
-  displayMap(target) {
-    if (!target || !isObject(target) || !target.latitude || !target.longitude) {
+  displayMap(data) {
+    if (!data || !isObject(data) || !data.latitude || !data.longitude) {
       throw new DataError("The error occurs on displaying map");
     }
 
     this.getInstance();
-    const latitude = +target.latitude;
-    const longitude = +target.longitude;
+    const latitude = +data.latitude;
+    const longitude = +data.longitude;
     if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
       throw new DataError("The error occurs on displaying map");
     }
@@ -40,12 +40,6 @@ export class Map {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
 
-    marker(targetLatLng).addTo(this.map);
-  }
-
-  displayWorld(maxZoom) {
-    this.getInstance();
-
-    this.map.fitWorld(maxZoom);
+    document.querySelector(".leaflet-bottom svg")?.remove();
   }
 }

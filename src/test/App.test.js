@@ -10,8 +10,6 @@ describe("App", () => {
     root.setAttribute("className", "app");
     document.body.append(root);
     app.root = root;
-
-    global.fetch = jest.fn();
   });
 
   afterEach(() => {
@@ -20,19 +18,21 @@ describe("App", () => {
 
   afterAll(() => {
     document.getElementById("app").remove();
-
-    delete global.fetch;
   });
 
   it("should create app layout", () => {
     app.createInitLayout();
     const expectedHTML = [
       '<div class="widget" id="widget">',
-      "<h1>Прогноз погоды</h1>",
+      '<span class="widget__title">Прогноз погоды</span>',
+      '<div class="top" id="top">',
       '<div class="search" id="search"></div>',
       '<div class="weather" id="weather"></div>',
+      "</div>",
+      '<div class="bottom" id="bottom">',
       '<div class="map" id="map"></div>',
       '<div class="history" id="history"></div>',
+      "</div>",
       "</div>",
     ].join("");
 

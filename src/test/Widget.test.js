@@ -42,8 +42,7 @@ describe("Widget", () => {
 
     const expectedHTML = [
       '<div class="weather" id="weather">',
-      '<span class="weather__description">Raleigh, US, T: 24.19°C, RH: 59%</span>',
-      "<span>Broken clouds</span>",
+      '<span class="weather__description">Broken clouds, Температура: 24.19°C, Влажность: 59%</span>',
       "</div>",
     ].join("");
     app.createInitLayout();
@@ -51,26 +50,6 @@ describe("Widget", () => {
     widget.displayWeather(data);
 
     expect(widget.weatherContainer.outerHTML).toStrictEqual(expectedHTML);
-  });
-
-  it("should correct display info by displaySearchInfo", () => {
-    widget.info = document.createElement("div");
-    root.append(widget.info);
-
-    widget.displaySearchInfo();
-    expect(widget.info.outerHTML).toBe("<div></div>");
-
-    widget.info.replaceChildren();
-    widget.displaySearchInfo("0");
-    expect(widget.info.outerHTML).toBe(
-      '<div><span class="search-info__info">0</span></div>'
-    );
-
-    widget.info.replaceChildren();
-    widget.displaySearchInfo("test");
-    expect(widget.info.outerHTML).toBe(
-      '<div><span class="search-info__info">test</span></div>'
-    );
   });
 
   it("should correct display history list by displayHistoryList", () => {
@@ -120,49 +99,42 @@ describe("Widget", () => {
     expect(widget.historyContainer.outerHTML).toStrictEqual(expectedHTML);
   });
 
-  it("should correct get target by getTarget", () => {
-    const data1 = {
-      data: [
-        {
-          city_name: "Raleigh",
-          lat: 35.7721,
-          lon: -78.63861,
-          rh: 59,
-          temp: 24.19,
-        },
-      ],
-    };
+  it("should correct display search by displaySearch", () => {
+    app.createInitLayout();
+    widget.searchContainer = document.getElementById("search");
 
-    const data2 = {
-      data: [
-        {
-          city_name: "Raleigh",
-          lon: -78.63861,
-          rh: 59,
-          temp: 24.19,
-        },
-      ],
-    };
+    widget.displaySearch();
+    expect(widget.info.outerHTML).toBe(
+      [
+        '<div id="info" class="search__info search-info">',
+        '<span class="search-info__info">Запрашиваем погоду в вашем городе...</span>',
+        "</div>",
+      ].join("")
+    );
 
-    expect(widget.target).toStrictEqual({});
+    root.replaceChildren();
+    widget.displaySearch();
+    expect(document.getElementById("search")).toBeNull();
+  });
 
-    widget.setTarget();
-    expect(widget.target).toStrictEqual({
-      latitude: undefined,
-      longitude: undefined,
-    });
+  it("should correct display info by displaySearchInfo", () => {
+    widget.info = document.createElement("div");
+    root.append(widget.info);
 
-    widget.setTarget(data1);
-    expect(widget.target).toStrictEqual({
-      latitude: 35.7721,
-      longitude: -78.63861,
-    });
+    widget.displaySearchInfo();
+    expect(widget.info.outerHTML).toBe("<div></div>");
 
-    widget.setTarget(data2);
-    expect(widget.target).toStrictEqual({
-      latitude: undefined,
-      longitude: -78.63861,
-    });
+    widget.info.replaceChildren();
+    widget.displaySearchInfo("0");
+    expect(widget.info.outerHTML).toBe(
+      '<div><span class="search-info__info">0</span></div>'
+    );
+
+    widget.info.replaceChildren();
+    widget.displaySearchInfo("test");
+    expect(widget.info.outerHTML).toBe(
+      '<div><span class="search-info__info">test</span></div>'
+    );
   });
 
   it("should correct display error by displaySearchError", () => {
@@ -184,5 +156,22 @@ describe("Widget", () => {
     );
 
     widget.info.remove();
+  });
+
+  it("should correct display map by displayMap", () => {
+    app.createInitLayout();
+    widget.mapContainer = document.getElementById("map");
+
+    widget.displayMap({ latitude: 35.7721, longitude: -78.63861 });
+    expect(document.getElementById("map")).not.toBeNull();
+  });
+
+  it("should correct display initial app by displayInitApp", async () => {
+    app.createInitLayout();
+    await widget.displayInitApp();
+
+    expect(document.querySelector("input")).not.toBeNull();
+    expect(document.querySelector("button")).not.toBeNull();
+    expect(document.querySelector("ul")).not.toBeNull();
   });
 });
