@@ -1,5 +1,9 @@
 .idea
-node_modules
+.vscode
+.eslintcache
+.stylelintcache
+.env
+build
 dist
-coverage
 out
+coverage

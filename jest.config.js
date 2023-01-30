@@ -20,7 +20,7 @@ module.exports = {
   // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["./src/app/*.js"],
+  collectCoverageFrom: ["./src/app/*.js", "!./src/app/helpers/*.js"],
   // collectCoverageFrom: [
   //     "**/*.{js,jsx}",
   //     "!**/node_modules/**",
@@ -136,7 +136,7 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ["dotenv/config"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],

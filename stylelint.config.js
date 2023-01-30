@@ -2,7 +2,6 @@ module.exports = {
   extends: ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
   rules: {
     "selector-class-pattern":
-      "^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(_([a-z0-9]+-?)+){0,2}?$",
+      "^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(--([a-z0-9]+-?)+){0,2}?$",
   },
-  "no-descending-specificity": [true, { ignore: [".ol*", "button"] }],
 };

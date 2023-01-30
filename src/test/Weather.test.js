@@ -1,9 +1,9 @@
 import { Weather } from "../app/Weather";
 import { Config } from "../app/Config";
-import { HttpError } from "../utils/HttpError";
-import { DataError } from "../utils/DataError";
-import { NoErrorThrownError } from "../utils/NoErrorThrownError";
-import { getError } from "../utils/helpers";
+import { HttpError } from "../app/helpers/HttpError";
+import { DataError } from "../app/helpers/DataError";
+import { NoErrorThrownError } from "./helpers/NoErrorThrownError";
+import { getError } from "./helpers/utils";
 
 describe("Weather", () => {
   let fetchMock;

@@ -1,27 +1,21 @@
-import { pull } from "lodash";
+import { Storage } from "./Storage";
 
 export class History {
   constructor(config) {
-    this.identifier = config.historyIdentifier;
-    this.count = config.historyCount;
+    this.type = config.historyStorageType;
+    this.identifier = config.historyStorageIdentifier;
+    this.storage = new Storage(config);
   }
 
-  read() {
-    const data = localStorage.getItem(this.identifier);
-    return data ? JSON.parse(data) : [];
+  async read() {
+    return this.storage.read();
   }
 
-  update(city) {
-    const data = this.read();
-    pull(data, city);
-    data.unshift(city);
-    localStorage.setItem(
-      this.identifier,
-      JSON.stringify(data.slice(0, this.count))
-    );
+  async update(city) {
+    return this.storage.update(city);
   }
 
-  clear() {
-    localStorage.removeItem(this.identifier);
+  async clear() {
+    return this.storage.clear(this.identifier);
   }
 }

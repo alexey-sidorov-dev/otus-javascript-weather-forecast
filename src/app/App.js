@@ -4,7 +4,6 @@ import { Weather } from "./Weather";
 import { Map } from "./Map";
 import { History } from "./History";
 import { Widget } from "./Widget";
-import { getTarget } from "../utils/helpers";
 
 export class App {
   constructor() {
@@ -31,10 +30,11 @@ export class App {
       const userGeoData = await this.geo.getGeo();
       const userWeatherData = await this.weather.getWeather(userGeoData);
       await this.widget.displayWeather(userWeatherData);
-      await this.widget.displayMap(getTarget(userWeatherData));
+      await this.widget.displayMap(
+        this.widget.getNormalizedTarget(userWeatherData)
+      );
     } catch (e) {
-      console.error(e);
-      this.widget.displaySearchError("При запросе погоды произошла ошибка...");
+      this.widget.displaySearchError("При запросе погоды произошла ошибка");
     }
   }
 

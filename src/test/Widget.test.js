@@ -23,8 +23,8 @@ describe("Widget", () => {
     document.getElementById("app")?.remove();
   });
 
-  it("should correct display weather by displayWeather", () => {
-    const data = {
+  it("should correct display weather by displayWeather", async () => {
+    const weatherData = {
       data: [
         {
           city_name: "Raleigh",
@@ -47,19 +47,19 @@ describe("Widget", () => {
     ].join("");
     app.createInitLayout();
     widget.weatherContainer = document.getElementById("weather");
-    widget.displayWeather(data);
+    await widget.displayWeather(weatherData);
 
     expect(widget.weatherContainer.outerHTML).toStrictEqual(expectedHTML);
   });
 
-  it("should correct display history list by displayHistoryList", () => {
+  it("should correct display history list by displayHistoryList", async () => {
     history.update("Barcelona");
     history.update("Paris");
     history.update("London");
 
     app.createInitLayout();
     widget.historyContainer = document.getElementById("history");
-    widget.displayHistoryList();
+    await widget.displayHistoryList();
 
     expect(widget.historyContainer.innerHTML).toStrictEqual(
       [
@@ -72,13 +72,13 @@ describe("Widget", () => {
     );
 
     history.clear();
-    widget.displayHistoryList();
+    await widget.displayHistoryList();
     expect(widget.historyContainer.innerHTML).toBe(
       '<ul class="history-list"></ul>'
     );
   });
 
-  it("should correct display history by displayHistory", () => {
+  it("should correct display history by displayHistory", async () => {
     history.update("Barcelona");
     history.update("Paris");
     history.update("London");
@@ -95,7 +95,7 @@ describe("Widget", () => {
 
     app.createInitLayout();
     widget.historyContainer = document.getElementById("history");
-    widget.displayHistory();
+    await widget.displayHistory();
     expect(widget.historyContainer.outerHTML).toStrictEqual(expectedHTML);
   });
 

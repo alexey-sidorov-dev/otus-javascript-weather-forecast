@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const LodashWebpackPlugin = require("lodash-webpack-plugin");
+const DotenvWebpackPlugin = require("dotenv-webpack");
 const path = require("path");
 
 const { NODE_ENV } = process.env;
@@ -83,6 +84,7 @@ module.exports = {
       template: path.resolve(__dirname, "./src/index.html"),
       favicon: path.resolve(__dirname, "./src/images/favicon.svg"),
     }),
+    new DotenvWebpackPlugin(),
   ],
 };
 

@@ -1,5 +1,5 @@
-import { escape } from "lodash";
-import { setAttributes, getTarget } from "../utils/helpers";
+import { escape, isObject } from "lodash";
+import { setAttributes, getProperty } from "./helpers/utils";
 
 export class Widget {
   constructor(params) {
@@ -21,30 +21,21 @@ export class Widget {
     this.displayHistory();
   }
 
-  async displayWeather(data) {
+  async displayWeather(weatherData) {
     if (!this.weatherContainer) {
       return;
     }
 
-    const target = getTarget(data);
+    const target = this.getNormalizedTarget(weatherData);
     this.displaySearchInfo(`Погода в городе ${target.city}, ${target.country}`);
     this.weatherContainer.replaceChildren();
 
-    const {
-      data: [
-        {
-          weather: { icon, description },
-          temp: tepmerature,
-          rh: humidity,
-        },
-      ],
-    } = data;
-
-    if (icon) {
+    const weather = this.getNormalizedWeather(weatherData);
+    if (weather.icon) {
       const weatherImageElement = document.createElement("img");
       setAttributes(weatherImageElement, {
         class: "weather__icon",
-        src: `https://www.weatherbit.io/static/img/icons/${icon}.png`,
+        src: `https://www.weatherbit.io/static/img/icons/${weather.icon}.png`,
         alt: "icon",
       });
       this.weatherContainer.appendChild(weatherImageElement);
@@ -56,7 +47,7 @@ export class Widget {
     });
     weatherDescriptionElement.appendChild(
       document.createTextNode(
-        `${description}, Температура: ${tepmerature}°C, Влажность: ${humidity}%`
+        `${weather.description}, Температура: ${weather.tepmerature}°C, Влажность: ${weather.humidity}%`
       )
     );
     this.weatherContainer.appendChild(weatherDescriptionElement);
@@ -129,17 +120,23 @@ export class Widget {
           `Запрашиваем погоду в городе ${escapedValue}...`
         );
 
-        this.history.update(escapedValue);
-        this.displayHistory();
+        try {
+          const weatherData = await this.weather.getWeather({
+            city: escapedValue,
+          });
 
-        const weatherData = await this.weather.getWeather({
-          city: escapedValue,
-        });
+          await this.displayWeather(weatherData);
 
-        await this.displayWeather(weatherData);
-        this.input.value = "";
-        this.input.focus();
-        await this.displayMap(getTarget(weatherData));
+          await this.history.update(escapedValue);
+          await this.displayHistory();
+          this.input.value = "";
+          this.input.focus();
+          await this.displayMap(this.getNormalizedTarget(weatherData));
+        } catch (e) {
+          this.displaySearchError(
+            e.message || "При запросе погоды произошла ошибка"
+          );
+        }
       }
     });
 
@@ -150,9 +147,9 @@ export class Widget {
     });
   }
 
-  displayHistory() {
+  async displayHistory() {
     if (this.historyContainer) {
-      this.displayHistoryList();
+      await this.displayHistoryList();
       this.addHistoryListener();
     }
   }
@@ -176,11 +173,11 @@ export class Widget {
     this.map.displayMap(target);
   }
 
-  displayHistoryList() {
+  async displayHistoryList() {
     const historyList = document.createElement("ul");
     setAttributes(historyList, { class: "history-list" });
 
-    const items = this.history.read();
+    const items = await this.history.read();
 
     items.forEach((textContent) => {
       const item = document.createElement("li");
@@ -193,5 +190,50 @@ export class Widget {
     });
 
     this.historyContainer.replaceChildren(historyList);
+  }
+
+  getNormalizedTarget(targetData) {
+    let normalizedTarget = {};
+
+    if (
+      targetData &&
+      isObject(targetData) &&
+      this.config.geoApiUrl.includes("ipgeolocation.io")
+    ) {
+      normalizedTarget = {
+        ...normalizedTarget,
+        city: getProperty(targetData, "data[0].city_name"),
+        country: getProperty(targetData, "data[0].country_code"),
+        latitude: getProperty(targetData, "data[0].lat"),
+        longitude: getProperty(targetData, "data[0].lon"),
+      };
+    }
+
+    return normalizedTarget;
+  }
+
+  getNormalizedWeather(weatherData) {
+    let normalizedWeather = {};
+
+    if (this.config.weatherApiUrl.includes("weatherbit.io")) {
+      const {
+        data: [
+          {
+            weather: { icon, description },
+            temp: tepmerature,
+            rh: humidity,
+          },
+        ],
+      } = weatherData;
+      normalizedWeather = {
+        ...normalizedWeather,
+        icon,
+        description,
+        tepmerature,
+        humidity,
+      };
+    }
+
+    return normalizedWeather;
   }
 }

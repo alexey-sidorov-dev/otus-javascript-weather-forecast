@@ -1,6 +1,6 @@
 import { isObject } from "lodash";
-import { HttpError } from "../utils/HttpError";
-import { DataError } from "../utils/DataError";
+import { HttpError } from "./helpers/HttpError";
+import { DataError } from "./helpers/DataError";
 
 export class Weather {
   constructor(config) {
@@ -12,13 +12,21 @@ export class Weather {
 
   async getWeather(geo) {
     if (!geo || !isObject(geo) || !geo.city) {
-      throw new DataError("The error occurs on getting weather");
+      throw new DataError(
+        `При запросе погоды в городе ${geo.city} произошла ошибка`
+      );
     }
 
     const url = `${this.apiUrl}?key=${this.apiKey}&units=${this.units}&lang=${this.language}&city=${geo.city}`;
     const response = await fetch(url);
     if (!response.ok) {
-      throw new HttpError("The error occurs on getting weather");
+      throw new HttpError(
+        `При запросе погоды в городе ${geo.city} произошла ошибка`
+      );
+    }
+
+    if (response.status === 204) {
+      throw new HttpError(`Не найдены данные о погоде в городе ${geo.city}`);
     }
 
     return response.json();

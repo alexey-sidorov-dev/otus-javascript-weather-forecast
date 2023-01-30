@@ -1,13 +1,13 @@
 import { Geo } from "../app/Geo";
 import { Config } from "../app/Config";
-import { HttpError } from "../utils/HttpError";
-import { NoErrorThrownError } from "../utils/NoErrorThrownError";
-import { getError } from "../utils/helpers";
+import { HttpError } from "../app/helpers/HttpError";
+import { NoErrorThrownError } from "./helpers/NoErrorThrownError";
+import { getError } from "./helpers/utils";
 
 describe("Geo", () => {
   let fetchMock;
   const config = new Config();
-  const apiUrl = config.geoApiUrl;
+  const apiUrl = `${config.geoApiUrl}?apiKey=${config.geoApiKey}`;
   const geo = new Geo(config);
 
   beforeAll(() => {

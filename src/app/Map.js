@@ -1,6 +1,6 @@
 import { map, tileLayer, LatLng } from "leaflet";
 import { isObject } from "lodash";
-import { DataError } from "../utils/DataError";
+import { DataError } from "./helpers/DataError";
 
 export class Map {
   constructor(config) {
