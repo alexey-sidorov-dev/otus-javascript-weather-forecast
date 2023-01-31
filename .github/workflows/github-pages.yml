@@ -6,16 +6,18 @@ jobs:
   deploy-to-gh-pages:
     runs-on: ubuntu-20.04
     steps:
-      - name: Create env file
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
-
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install Packages
         run: |
           npm install
+
+      - name: Create env file
+        run: |
+          pwd
+          echo "${{ secrets.ENV_FILE }}" > .env
+          ls
 
       - name: Build
         run: |
