@@ -1,0 +1,10 @@
+@import "../../node_modules/leaflet/dist/leaflet.css";
+
+.map {
+  height: 400px;
+  width: 400px;
+}
+
+.leaflet-attribution-flag {
+  visibility: hidden;
+}
