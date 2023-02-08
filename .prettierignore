@@ -3,9 +3,7 @@
 .eslintcache
 .stylelintcache
 .env
-node_modules
 build
 dist
 out
 coverage
-
