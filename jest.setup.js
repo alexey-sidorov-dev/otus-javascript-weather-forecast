@@ -1,6 +1,7 @@
-import { resolve } from "path";
-import { config } from "dotenv";
+/* eslint-disable @typescript-eslint/no-var-requires */
+const path = require("path");
+const dotenv = require("dotenv");
 
-export default async () => {
-  config({ path: resolve(__dirname, "./.env") });
+module.exports = async () => {
+  dotenv.config({ path: path.resolve(__dirname, "./.env") });
 };

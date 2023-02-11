@@ -1,5 +1,5 @@
-function setAttributes(element, attrs = {}) {
-  Object.entries(attrs).forEach(([key, value]) =>
+function setAttributes(element, attributes = {}) {
+  Object.entries(attributes).forEach(([key, value]) =>
     element.setAttribute(key, value)
   );
 }
