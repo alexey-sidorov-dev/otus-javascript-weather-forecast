@@ -12,6 +12,7 @@ export abstract class Component<State = GenericObject> {
     this.element = element;
     this.state = initialState ? (initialState as State) : this.state;
     setTimeout(() => {
+      this.element.innerHTML = this.render();
       this.onMount();
     }, 0);
   }
@@ -33,7 +34,6 @@ export abstract class Component<State = GenericObject> {
   }
 
   protected onMount(): void {
-    this.element.innerHTML = this.render();
     this.subscribe();
   }
 

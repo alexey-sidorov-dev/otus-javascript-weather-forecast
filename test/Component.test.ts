@@ -42,7 +42,7 @@ describe("Component", () => {
     }
 
     new TestComponent(element);
-    await sleep(10);
+    await sleep(42);
 
     expect(element.innerHTML).toBe(`<span>${text}</span>`);
   });
@@ -59,8 +59,8 @@ describe("Component", () => {
       }
     }
 
-    new TestComponent(element);
-    await sleep(10);
+    new TestComponent(element, null);
+    await sleep(42);
 
     expect(element.innerHTML).toBe(`<span>${text}</span>`);
   });
@@ -87,7 +87,7 @@ describe("Component", () => {
     }
 
     const component = new TestComponent(element, { text: newText });
-    await sleep(10);
+    await sleep(42);
 
     expect(component.state).toEqual({ text: newText });
     expect(element.innerHTML).toBe(`<span>${newText}</span>`);
@@ -109,7 +109,7 @@ describe("Component", () => {
     }
 
     const component = new TestComponent(element);
-    await sleep(10);
+    await sleep(42);
 
     component.setState({
       text: newText,
@@ -148,7 +148,7 @@ describe("Component", () => {
     }
 
     new TestComponent(element);
-    await sleep(10);
+    await sleep(42);
 
     expect(onSpanClick).not.toHaveBeenCalled();
     expect(onButtonClick).not.toHaveBeenCalled();

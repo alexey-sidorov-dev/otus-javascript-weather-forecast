@@ -1,29 +1,15 @@
 import { ITemplater } from "../interfaces/templater";
-import { GenericObject, TemplateDataObject } from "../types/objects";
+import { TemplateDataObject } from "../types/objects";
 
-export class Templater<Options = GenericObject> implements ITemplater {
-  private options: Options = {} as Options;
-
-  constructor(options?: Options) {
-    this.options = options;
+export class Templater implements ITemplater {
+  template(input: string, data: TemplateDataObject = {}): string {
+    return this.internalTemplate(input, data);
   }
 
-  template(input: string, data: TemplateDataObject = {}): string {
-    let templated = input;
+  /* eslint-disable class-methods-use-this */
+  private internalTemplate(input: string, data: TemplateDataObject): string {
+    const result = input + data;
 
-    templated = templated.replace(
-      /\{\{for (\w+)}}(.+?)\{\{endfor\}}/g,
-      (match: string, itemsKey: string, subTemplate: string) => {
-        let result = "";
-        if (itemsKey in data) {
-          for (let i = 0; i < data[itemsKey].length; i++) {
-            result += this.template(subTemplate, (data[itemsKey] as [])[i]);
-          }
-        }
-        return result;
-      }
-    );
-
-    return templated;
+    return result;
   }
 }
