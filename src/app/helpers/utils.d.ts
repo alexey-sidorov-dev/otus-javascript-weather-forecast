@@ -1,12 +1,10 @@
-import { AttributesObject, GenericObject } from "../../types/objects";
-
 function setAttributes(
   element: HTMLElement,
-  attributes: AttributesObject
+  attributes: Record<string, string>
 ): void;
 
 function getProperty(
-  obj: GenericObject,
+  obj: unknown,
   path: string,
   defaultValue?: unknown
 ): unknown;

@@ -16,6 +16,6 @@ export class History {
   }
 
   async clear() {
-    return this.storage.clear(this.identifier);
+    return this.storage.clear();
   }
 }

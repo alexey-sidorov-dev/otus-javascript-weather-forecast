@@ -1,4 +1,3 @@
-import { isObject } from "lodash";
 import { HttpError } from "./helpers/HttpError";
 import { DataError } from "./helpers/DataError";
 
@@ -11,7 +10,7 @@ export class Weather {
   }
 
   async getWeather(geo) {
-    if (!geo || !isObject(geo) || !geo.city) {
+    if (!geo || typeof geo !== "object" || !geo.city) {
       throw new DataError(
         `При запросе погоды в городе ${geo.city} произошла ошибка`
       );

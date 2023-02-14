@@ -47,7 +47,6 @@ describe("Geo", () => {
     global.fetch.mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve({}), ok: false })
     );
-
     const error = await getError(async () => geo.getGeo());
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(HttpError);

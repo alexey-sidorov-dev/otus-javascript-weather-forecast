@@ -1,7 +1,5 @@
-type EpmtyObject = { [key: string]: never };
+type EpmtyObject = Record<string, never>;
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-type GenericObject = { [key: string]: any };
-type AttributesObject = { [key: string]: string };
-type TemplateDataObject = { [key: string]: string | [] };
+type GenericObject = Record<string, any>;
 
-export { EpmtyObject, GenericObject, AttributesObject, TemplateDataObject };
+export { EpmtyObject, GenericObject };

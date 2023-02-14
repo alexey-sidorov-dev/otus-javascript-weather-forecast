@@ -1,1 +1,1 @@
-export type Events = { [key: string]: (ev: Event) => void };
+export type Events = Record<string, (ev: Event) => void>;

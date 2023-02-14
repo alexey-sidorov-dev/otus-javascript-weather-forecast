@@ -63,7 +63,7 @@ export class Widget {
       id: "input",
       class: "search__input",
       placeholder: "Город",
-      autofocus: true,
+      autofocus: "true",
     });
     this.input.autofocus = true;
 

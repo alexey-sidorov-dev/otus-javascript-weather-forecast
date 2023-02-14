@@ -30,7 +30,7 @@ module.exports = {
     "max-len": ["error", { ignoreComments: true, code: 120 }],
     "no-console": "off",
     "no-alert": "off",
-    "no-param-reassign": ["error", { props: false }],
+    "no-param-reassign": ["off"],
     "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [

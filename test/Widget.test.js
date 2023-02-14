@@ -15,7 +15,6 @@ describe("Widget", () => {
 
   afterEach(() => {
     document.getElementById("widget")?.remove();
-    widget.target = {};
     history.clear();
   });
 
