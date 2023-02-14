@@ -1,4 +1,5 @@
 import { App } from "../src/app/App";
+import { WeatherData } from "../src/types/widget";
 
 describe("Widget", () => {
   let root;
@@ -23,7 +24,7 @@ describe("Widget", () => {
   });
 
   it("should correct display weather by displayWeather", async () => {
-    const weatherData = {
+    const weatherData: WeatherData = {
       data: [
         {
           city_name: "Raleigh",
@@ -34,6 +35,7 @@ describe("Widget", () => {
           temp: 24.19,
           weather: {
             description: "Broken clouds",
+            icon: null,
           },
         },
       ],
@@ -120,7 +122,7 @@ describe("Widget", () => {
     widget.info = document.createElement("div");
     root.append(widget.info);
 
-    widget.displaySearchInfo();
+    widget.displaySearchInfo("");
     expect(widget.info.outerHTML).toBe("<div></div>");
 
     widget.info.replaceChildren();
@@ -139,7 +141,7 @@ describe("Widget", () => {
   it("should correct display error by displaySearchError", () => {
     widget.info = document.createElement("div");
 
-    widget.displaySearchError();
+    widget.displaySearchError("");
     expect(widget.info.outerHTML).toBe("<div></div>");
 
     widget.info.replaceChildren();

@@ -21,9 +21,7 @@ export class Weather {
 
   async getWeather<T extends GeoData>(geo: T): Promise<unknown> {
     if (!geo || typeof geo !== "object" || !geo.city) {
-      throw new DataError(
-        `При запросе погоды в городе ${geo.city} произошла ошибка`
-      );
+      throw new DataError(`При запросе погоды произошла ошибка`);
     }
 
     const url = `${this.apiUrl}?key=${this.apiKey}&units=${this.units}&lang=${this.language}&city=${geo.city}`;

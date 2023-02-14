@@ -21,7 +21,7 @@ describe("Weather", () => {
 
   it("should be called with correct url", async () => {
     fetchMock = jest.spyOn(global, "fetch");
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve({}), ok: true })
     );
     await weather.getWeather({ city: "Moscow" });
@@ -45,7 +45,7 @@ describe("Weather", () => {
       ],
     };
 
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve(expected), ok: true })
     );
     const result = await weather.getWeather({ city: "Moscow" });
@@ -54,15 +54,13 @@ describe("Weather", () => {
   });
 
   it("should throw error with invalid geo params", async () => {
-    const error = await getError(async () =>
-      weather.getWeather({ key: "value" })
-    );
+    const error = await getError(async () => weather.getWeather({ city: "" }));
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(DataError);
   });
 
   it("should return error for unsuccessful request", async () => {
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve({}), ok: false })
     );
     const error = await getError(async () =>

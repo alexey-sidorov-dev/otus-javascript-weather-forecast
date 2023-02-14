@@ -114,7 +114,7 @@ export class Widget {
     this.addSearchListener();
   }
 
-  displaySearchInfo(textContent) {
+  displaySearchInfo(textContent: string) {
     if (textContent) {
       const info = document.createElement("span");
       setAttributes(info, {

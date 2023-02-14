@@ -20,7 +20,7 @@ describe("Geo", () => {
 
   it("should be called with valid URL", async () => {
     fetchMock = jest.spyOn(global, "fetch");
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve({}), ok: true })
     );
 
@@ -35,7 +35,7 @@ describe("Geo", () => {
       longitude: "37.62203",
     };
 
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve(expected), ok: true })
     );
 
@@ -44,7 +44,7 @@ describe("Geo", () => {
   });
 
   it("should return error for unsuccessful request", async () => {
-    global.fetch.mockResolvedValueOnce(
+    (global.fetch as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({ json: () => Promise.resolve({}), ok: false })
     );
     const error = await getError(async () => geo.getGeo());

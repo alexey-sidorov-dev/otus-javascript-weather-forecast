@@ -26,7 +26,7 @@ describe("Map", () => {
     mapElement.setAttribute("id", "map");
     document.body.append(mapElement);
     const error = await getError(() => {
-      map.displayMap({ latitude: 51.513 });
+      map.displayMap({ latitude: "51.513", longitude: null });
     });
 
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
@@ -38,7 +38,7 @@ describe("Map", () => {
     mapElement.setAttribute("id", "map");
     document.body.append(mapElement);
     const error = await getError(() =>
-      map.displayMap({ latitude: 51.513, longitude: "value" })
+      map.displayMap({ latitude: "51.513", longitude: "value" })
     );
 
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
@@ -51,7 +51,7 @@ describe("Map", () => {
     document.body.append(mapElement);
 
     const error = await getError(() =>
-      map.displayMap({ latitude: 51.513, longitude: -0.09 })
+      map.displayMap({ latitude: "51.513", longitude: "-0.09" })
     );
 
     expect(error).toBeInstanceOf(NoErrorThrownError);
