@@ -1,9 +1,18 @@
 import { map, tileLayer, LatLng } from "leaflet";
 import { isObject } from "lodash";
+import { Config } from "./Config";
 import { DataError } from "./helpers/DataError";
 
 export class Map {
-  constructor(config) {
+  initZoom: number;
+
+  maxZoom: number;
+
+  container: string;
+
+  map: any;
+
+  constructor(config: Config) {
     this.initZoom = config.mapInitZoom;
     this.maxZoom = config.mapMaxZoom;
     this.container = config.mapContainerId;
@@ -19,7 +28,7 @@ export class Map {
     this.map = this.map || map(mapElement);
   }
 
-  displayMap(data) {
+  displayMap(data: { latitude: string; longitude: string }) {
     if (!data || !isObject(data) || !data.latitude || !data.longitude) {
       throw new DataError("The error occurs on displaying map");
     }

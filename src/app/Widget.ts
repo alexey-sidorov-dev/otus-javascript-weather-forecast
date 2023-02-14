@@ -1,10 +1,36 @@
 import { escape, isObject } from "lodash";
+import { IHistory } from "../interfaces/history";
+import { WeatherData } from "../types/widget";
+import { Config } from "./Config";
 import { setAttributes, getProperty } from "./helpers/utils";
 
 export class Widget {
-  constructor(params) {
-    this.config = params.config;
+  config: Config;
 
+  map: any;
+
+  geo: any;
+
+  weather: any;
+
+  history: IHistory;
+
+  searchContainer: HTMLElement;
+
+  weatherContainer: HTMLElement;
+
+  mapContainer: HTMLElement;
+
+  historyContainer: HTMLElement;
+
+  input: HTMLInputElement;
+
+  button: HTMLButtonElement;
+
+  info: HTMLDivElement;
+
+  constructor(params: Record<string, any>) {
+    this.config = params.config;
     this.map = params.map;
     this.geo = params.geo;
     this.weather = params.weather;
@@ -21,16 +47,16 @@ export class Widget {
     this.displayHistory();
   }
 
-  async displayWeather(weatherData) {
+  async displayWeather(weatherData: WeatherData) {
     if (!this.weatherContainer) {
       return;
     }
 
-    const target = this.getNormalizedTarget(weatherData);
+    const target: Record<string, any> = this.getNormalizedTarget(weatherData);
     this.displaySearchInfo(`Погода в городе ${target.city}, ${target.country}`);
     this.weatherContainer.replaceChildren();
 
-    const weather = this.getNormalizedWeather(weatherData);
+    const weather: any = this.getNormalizedWeather(weatherData as WeatherData);
     if (weather.icon) {
       const weatherImageElement = document.createElement("img");
       setAttributes(weatherImageElement, {
@@ -58,7 +84,7 @@ export class Widget {
       return;
     }
 
-    this.input = document.createElement("input");
+    this.input = document.createElement("input") as HTMLInputElement;
     setAttributes(this.input, {
       id: "input",
       class: "search__input",
@@ -67,7 +93,7 @@ export class Widget {
     });
     this.input.autofocus = true;
 
-    this.button = document.createElement("button");
+    this.button = document.createElement("button") as HTMLButtonElement;
     setAttributes(this.button, {
       id: "button",
       class: "search__button",
@@ -75,7 +101,7 @@ export class Widget {
     });
     this.button.appendChild(document.createTextNode("Узнать погоду"));
 
-    this.info = document.createElement("div");
+    this.info = document.createElement("div") as HTMLDivElement;
     setAttributes(this.info, {
       id: "info",
       class: "search__info search-info",
@@ -192,7 +218,7 @@ export class Widget {
     this.historyContainer.replaceChildren(historyList);
   }
 
-  getNormalizedTarget(targetData) {
+  getNormalizedTarget(targetData: any) {
     let normalizedTarget = {};
 
     if (
@@ -202,17 +228,26 @@ export class Widget {
     ) {
       normalizedTarget = {
         ...normalizedTarget,
-        city: getProperty(targetData, "data[0].city_name"),
-        country: getProperty(targetData, "data[0].country_code"),
-        latitude: getProperty(targetData, "data[0].lat"),
-        longitude: getProperty(targetData, "data[0].lon"),
+        city: getProperty(
+          targetData as Record<string, any>,
+          "data[0].city_name"
+        ),
+        country: getProperty(
+          targetData as Record<string, any>,
+          "data[0].country_code"
+        ),
+        latitude: getProperty(targetData as Record<string, any>, "data[0].lat"),
+        longitude: getProperty(
+          targetData as Record<string, any>,
+          "data[0].lon"
+        ),
       };
     }
 
     return normalizedTarget;
   }
 
-  getNormalizedWeather(weatherData) {
+  getNormalizedWeather(weatherData: any) {
     let normalizedWeather = {};
 
     if (this.config.weatherApiUrl.includes("weatherbit.io")) {

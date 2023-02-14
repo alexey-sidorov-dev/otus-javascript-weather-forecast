@@ -1,9 +1,11 @@
-export class Iteration {
-  public index: number;
+import { ITemplaterIteration } from "../../interfaces/templater";
 
-  public isLast: boolean;
+export class TemplaterIteration implements ITemplaterIteration {
+  index: number;
 
-  public isFirst: boolean;
+  isLast: boolean;
+
+  isFirst: boolean;
 
   private bound: number;
 

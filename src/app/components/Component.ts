@@ -1,5 +1,5 @@
-import { Events } from "../types/events";
-import { GenericObject } from "../types/objects";
+import { Events } from "../../types/component";
+import { GenericObject } from "../../types/objects";
 
 export abstract class Component<State = GenericObject> {
   private element: HTMLElement;

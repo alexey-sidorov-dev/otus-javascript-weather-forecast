@@ -1,4 +1,4 @@
-import { Templater } from "../src/app/Templater";
+import { Templater } from "../src/app/helpers/Templater";
 
 describe("Templater", () => {
   it("should be a Templater class", () => {

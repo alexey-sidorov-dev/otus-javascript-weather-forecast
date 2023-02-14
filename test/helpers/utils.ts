@@ -1,6 +1,6 @@
 import { NoErrorThrownError } from "./NoErrorThrownError";
 
-async function getError(call) {
+export async function getError(call: any): Promise<Error | NoErrorThrownError> {
   try {
     await call();
     throw new NoErrorThrownError();
@@ -8,5 +8,3 @@ async function getError(call) {
     return error;
   }
 }
-
-export { getError };

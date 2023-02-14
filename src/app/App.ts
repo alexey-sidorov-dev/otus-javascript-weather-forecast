@@ -4,8 +4,23 @@ import { Weather } from "./Weather";
 import { Map } from "./Map";
 import { History } from "./History";
 import { Widget } from "./Widget";
+import { WeatherData } from "../types/widget";
 
 export class App {
+  config: Config;
+
+  map: Map;
+
+  geo: Geo;
+
+  weather: Weather;
+
+  history: History;
+
+  widget: Widget;
+
+  root: HTMLElement;
+
   constructor() {
     this.config = new Config();
     this.map = new Map(this.config);
@@ -21,15 +36,17 @@ export class App {
     });
   }
 
-  async run(root) {
+  async run(root: HTMLElement) {
     this.root = root;
     try {
       this.createInitLayout();
       this.widget.displayInitApp();
 
       const userGeoData = await this.geo.getGeo();
-      const userWeatherData = await this.weather.getWeather(userGeoData);
-      await this.widget.displayWeather(userWeatherData);
+      const userWeatherData = await this.weather.getWeather(
+        userGeoData as { city: string }
+      );
+      await this.widget.displayWeather(userWeatherData as WeatherData);
       await this.widget.displayMap(
         this.widget.getNormalizedTarget(userWeatherData)
       );

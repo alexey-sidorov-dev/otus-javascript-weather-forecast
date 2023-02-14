@@ -1,15 +1,25 @@
 import { HttpError } from "./helpers/HttpError";
 import { DataError } from "./helpers/DataError";
+import { Config } from "./Config";
+import { GeoData } from "../types/widget";
 
 export class Weather {
-  constructor(config) {
+  private apiUrl: string;
+
+  private apiKey: string;
+
+  private units: string;
+
+  private language: string;
+
+  constructor(config: Config) {
     this.apiUrl = config.weatherApiUrl;
     this.apiKey = config.weatherApiKey;
     this.units = config.units;
     this.language = config.language;
   }
 
-  async getWeather(geo) {
+  async getWeather<T extends GeoData>(geo: T): Promise<unknown> {
     if (!geo || typeof geo !== "object" || !geo.city) {
       throw new DataError(
         `При запросе погоды в городе ${geo.city} произошла ошибка`

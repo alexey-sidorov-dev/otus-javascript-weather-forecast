@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this, max-classes-per-file, no-new */
-import { Component } from "../src/app/Component";
+import { Component } from "../src/app/components/Component";
 import { sleep } from "./helpers/sleep";
 
 describe("Component", () => {

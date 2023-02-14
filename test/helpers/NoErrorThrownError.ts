@@ -1,6 +1,6 @@
 export class NoErrorThrownError extends Error {
-  constructor(message) {
-    super(message);
+  constructor() {
+    super("NoErrorThrownError");
     this.name = "NoErrorThrownError";
   }
 }

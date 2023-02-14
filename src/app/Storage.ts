@@ -1,7 +1,13 @@
 import { pull } from "lodash";
+import { IStorage } from "../interfaces/history";
+import { Config } from "./Config";
 
-export class Storage {
-  constructor(config) {
+export class Storage implements IStorage {
+  identifier: string;
+
+  count: number;
+
+  constructor(config: Config) {
     this.identifier = config.historyStorageIdentifier;
     this.count = config.historyItemsCount;
   }
@@ -11,7 +17,7 @@ export class Storage {
     return data ? JSON.parse(data) : [];
   }
 
-  update(city) {
+  update(city: string) {
     const data = this.read();
     pull(data, city);
     data.unshift(city);

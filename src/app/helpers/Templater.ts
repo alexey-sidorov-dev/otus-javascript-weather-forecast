@@ -1,15 +1,15 @@
-import { ITemplater } from "../interfaces/templater";
-import { Iteration } from "./helpers/Iteration";
+import { ITemplater } from "../../interfaces/templater";
+import { TemplaterIteration } from "./TemplaterIteration";
 
 export class Templater implements ITemplater {
-  public template(input: string, data?: Record<string, unknown>): string {
+  template(input: string, data?: Record<string, unknown>): string {
     return this.templateInternal(input, data);
   }
 
   private templateInternal(
     input: string,
     data: Record<string, unknown>,
-    iterationData?: Iteration
+    iterationData?: TemplaterIteration
   ): string {
     let result: string = input;
 
@@ -20,7 +20,7 @@ export class Templater implements ITemplater {
           ? (data[collection] as unknown[])
               .map((item: unknown, index: number, arr: RegExpMatchArray) => {
                 if (iterationData === undefined) {
-                  iterationData = new Iteration(arr.length);
+                  iterationData = new TemplaterIteration(arr.length);
                 } else {
                   iterationData.increment();
                 }

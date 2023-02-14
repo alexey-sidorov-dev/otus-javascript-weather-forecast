@@ -1,11 +1,14 @@
+import { Config } from "./Config";
 import { HttpError } from "./helpers/HttpError";
 
 export class Geo {
-  constructor(config) {
+  private apiUrl: string;
+
+  constructor(config: Config) {
     this.apiUrl = `${config.geoApiUrl}?apiKey=${config.geoApiKey}`;
   }
 
-  async getGeo() {
+  async getGeo(): Promise<unknown> {
     const url = this.apiUrl;
     const response = await fetch(url);
     if (!response.ok) {
