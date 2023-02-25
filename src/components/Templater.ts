@@ -1,8 +1,9 @@
-import { ITemplater } from "../../interfaces/templater";
-import { TemplaterIteration } from "./TemplaterIteration";
+import { ITemplater } from "../types/templater";
+import { TemplaterIteration } from "../helpers/TemplaterIteration";
+import { GenericObject } from "../types/generic";
 
 export class Templater implements ITemplater {
-  template(input: string, data?: Record<string, unknown>): string {
+  template(input: string, data: GenericObject = {}): string {
     return this.templateInternal(input, data);
   }
 
@@ -18,7 +19,7 @@ export class Templater implements ITemplater {
       (_, collection, internalTemplate) =>
         data[collection] && Array.isArray(data[collection])
           ? (data[collection] as unknown[])
-              .map((item: unknown, index: number, arr: RegExpMatchArray) => {
+              .map((item: unknown, index: number, arr: Array<unknown>) => {
                 if (iterationData === undefined) {
                   iterationData = new TemplaterIteration(arr.length);
                 } else {
@@ -42,7 +43,7 @@ export class Templater implements ITemplater {
 
     result = result.replace(
       /{{if (\w+)}}((s|\S)+){{end if}}/gm,
-      (_, conditionToken: string, innerTemplate) => {
+      (_, conditionToken: keyof TemplaterIteration, innerTemplate) => {
         let rezult = "";
 
         if (iterationData !== undefined && conditionToken in iterationData) {

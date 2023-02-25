@@ -24,7 +24,11 @@ module.exports = {
     "import/no-extraneous-dependencies": [
       "error",
       {
-        devDependencies: ["**/webpack.*.ts"],
+        devDependencies: [
+          "**/webpack.*.{js,ts}",
+          "**/*.test.{js,ts,jsx,tsx}",
+          "**/config/*.{ts,js}",
+        ],
       },
     ],
     "max-len": ["error", { ignoreComments: true, code: 120 }],

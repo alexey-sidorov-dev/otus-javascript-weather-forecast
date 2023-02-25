@@ -18,9 +18,17 @@ export function getProperty(
       .filter(Boolean)
       .reduce(
         (res: unknown, key: string) =>
-          res !== null && res !== undefined ? res[key] : res,
+          res !== null && res !== undefined && typeof res === "object"
+            ? (res as Record<string, unknown>)[key]
+            : res,
         obj
       );
   const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
   return result === undefined || result === obj ? defaultValue : result;
+}
+
+export function pull<T>(sourceArray: T[], ...removeList: T[]): T[] {
+  const removeSet = new Set(removeList);
+
+  return sourceArray.filter((el) => !removeSet.has(el));
 }

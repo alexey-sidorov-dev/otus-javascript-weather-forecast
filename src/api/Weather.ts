@@ -1,7 +1,7 @@
-import { HttpError } from "./helpers/HttpError";
-import { DataError } from "./helpers/DataError";
-import { Config } from "./Config";
-import { GeoData } from "../types/widget";
+import { HttpError } from "../helpers/HttpError";
+import { DataError } from "../helpers/DataError";
+import { Config } from "../config/Config";
+import { IGeoData } from "../types/geo";
 
 export class Weather {
   private apiUrl: string;
@@ -19,7 +19,7 @@ export class Weather {
     this.language = config.language;
   }
 
-  async getWeather<T extends GeoData>(geo: T): Promise<unknown> {
+  async getWeather<T extends IGeoData>(geo: T): Promise<unknown> {
     if (!geo || typeof geo !== "object" || !geo.city) {
       throw new DataError(`При запросе погоды произошла ошибка`);
     }

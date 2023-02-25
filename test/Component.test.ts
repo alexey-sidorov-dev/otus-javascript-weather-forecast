@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this, max-classes-per-file, no-new */
-import { Component } from "../src/app/components/Component";
+import { Component } from "../src/components/Component";
 import { sleep } from "./helpers/sleep";
 
 describe("Component", () => {
-  let element: HTMLDivElement;
   let root: HTMLDivElement;
+  let element: HTMLDivElement;
 
   beforeAll(() => {
     root = document.createElement("div");
@@ -19,6 +19,10 @@ describe("Component", () => {
 
   afterEach(() => {
     root.replaceChildren();
+  });
+
+  afterAll(() => {
+    document.body.replaceChildren();
   });
 
   it("should be a Component class", () => {
@@ -59,26 +63,26 @@ describe("Component", () => {
       }
     }
 
-    new TestComponent(element, null);
+    new TestComponent(element);
     await sleep(42);
 
     expect(element.innerHTML).toBe(`<span>${text}</span>`);
   });
 
   it("should render component from initial state", async () => {
-    type S = { text: string; number: number };
+    type State = { text: string; number: number };
     const number = 42;
     const text = `${Math.random()}`;
     const newText = `${Math.random()}`;
     class TestComponent extends Component {
-      state: S = {
+      state: State = {
         text,
         number,
       };
 
-      constructor(el: HTMLElement, initialState?: Partial<S>) {
+      constructor(el: HTMLElement, initialState?: Partial<State>) {
         super(el);
-        this.state = initialState ? (initialState as S) : this.state;
+        this.state = initialState ? (initialState as State) : this.state;
       }
 
       render() {

@@ -1,15 +1,12 @@
-import { App } from "../src/app/App";
+import { App } from "../src/components/App";
 
 describe("App", () => {
-  let root;
-  const app = new App();
+  let root: HTMLDivElement;
 
   beforeAll(() => {
     root = document.createElement("div");
     root.setAttribute("id", "app");
-    root.setAttribute("className", "app");
     document.body.append(root);
-    app.root = root;
   });
 
   afterEach(() => {
@@ -17,11 +14,19 @@ describe("App", () => {
   });
 
   afterAll(() => {
-    document.getElementById("app").remove();
+    document.body.replaceChildren();
+  });
+
+  it("should be a class", () => {
+    const app = new App(root);
+
+    expect(App).toBeInstanceOf(Function);
+    expect(app).toBeInstanceOf(App);
   });
 
   it("should create app layout", () => {
-    app.createInitLayout();
+    const app = new App(root);
+
     const expectedHTML = [
       '<div class="widget" id="widget">',
       '<span class="widget__title">Прогноз погоды</span>',
@@ -36,6 +41,6 @@ describe("App", () => {
       "</div>",
     ].join("");
 
-    expect(root.innerHTML.trim()).toStrictEqual(expectedHTML.trim());
+    expect(root.innerHTML).toStrictEqual(expectedHTML);
   });
 });

@@ -1,11 +1,12 @@
-import { App } from "./app/App";
 import "modern-css-reset";
 import "./styles/style.scss";
+import { App } from "./components/App";
 
 (async () => {
   const root = document.getElementById("app");
-  const app = new App();
+
   if (root) {
-    await app.run(root);
+    /* eslint-disable-next-line no-new */
+    new App(root);
   }
 })();

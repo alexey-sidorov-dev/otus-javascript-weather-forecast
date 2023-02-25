@@ -4,7 +4,6 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import LodashWebpackPlugin from "lodash-webpack-plugin";
 import DotenvWebpackPlugin from "dotenv-webpack";
 import { resolve } from "node:path";
 
@@ -25,10 +24,7 @@ const config: webpack.Configuration = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: [
-          "babel-loader",
-          { loader: "ts-loader", options: { configFile: "tsconfig.json" } },
-        ],
+        use: ["babel-loader", "ts-loader"],
       },
 
       {
@@ -135,8 +131,7 @@ if (prodMode) {
           to: resolve(__dirname, "./dist"),
         },
       ],
-    }),
-    new LodashWebpackPlugin()
+    })
   );
   config.optimization = {
     minimize: true,

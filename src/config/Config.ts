@@ -1,4 +1,4 @@
-import { IConfig } from "../interfaces/config";
+import { IConfig } from "../types/config";
 
 export class Config implements IConfig {
   units: string;
@@ -21,7 +21,7 @@ export class Config implements IConfig {
 
   historyStorageType: string;
 
-  historyStorageIdentifier: string;
+  historyDataIdentifier: string;
 
   historyItemsCount: number;
 
@@ -35,8 +35,8 @@ export class Config implements IConfig {
     this.mapContainerId = "map";
     this.mapInitZoom = 10;
     this.mapMaxZoom = 17;
-    this.historyStorageType = "localStorage";
-    this.historyStorageIdentifier = "weather";
+    this.historyStorageType = String(process.env.HISTORY_STORAGE_TYPE);
+    this.historyDataIdentifier = "weather";
     this.historyItemsCount = 10;
   }
 }

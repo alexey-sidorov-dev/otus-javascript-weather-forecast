@@ -1,4 +1,4 @@
-export class Config {
+export interface IConfig {
   units: string;
 
   language: string;
@@ -19,7 +19,7 @@ export class Config {
 
   historyStorageType: string;
 
-  historyStorageIdentifier: string;
+  historyDataIdentifier: string;
 
   historyItemsCount: number;
 }

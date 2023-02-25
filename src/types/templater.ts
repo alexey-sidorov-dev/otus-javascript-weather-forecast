@@ -1,5 +1,5 @@
 export interface ITemplater {
-  template: (input: string, data?: Record<string, unknown>) => string;
+  template: (input: string, data: Record<string, unknown>) => string;
 }
 
 export interface ITemplaterIteration {

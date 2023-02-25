@@ -1,31 +1,29 @@
-import { Geo } from "../src/app/Geo";
-import { Config } from "../src/app/Config";
-import { HttpError } from "../src/app/helpers/HttpError";
+import fetchMock from "jest-fetch-mock";
+import { Geo } from "../src/api/Geo";
+import { Config } from "../src/config/Config";
+import { HttpError } from "../src/helpers/HttpError";
 import { NoErrorThrownError } from "./helpers/NoErrorThrownError";
 import { getError } from "./helpers/utils";
 
 describe("Geo", () => {
-  let fetchMock;
   const config = new Config();
   const apiUrl = `${config.geoApiUrl}?apiKey=${config.geoApiKey}`;
   const geo = new Geo(config);
 
-  beforeAll(() => {
-    global.fetch = jest.fn();
-  });
-
-  afterAll(() => {
-    delete global.fetch;
+  beforeEach(() => {
+    fetchMock.enableMocks();
+    fetchMock.doMock();
   });
 
   it("should be called with valid URL", async () => {
-    fetchMock = jest.spyOn(global, "fetch");
-    (global.fetch as jest.Mock).mockResolvedValueOnce(
-      Promise.resolve({ json: () => Promise.resolve({}), ok: true })
-    );
+    fetchMock.mockResponseOnce(JSON.stringify({}), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
 
     await geo.getGeo();
-    expect(fetchMock).toHaveBeenCalledWith(`${apiUrl}`);
+    expect(fetch).toHaveBeenCalledWith(`${apiUrl}`);
+    expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it("should return geo data for successful request", async () => {
@@ -35,8 +33,16 @@ describe("Geo", () => {
       longitude: "37.62203",
     };
 
-    (global.fetch as jest.Mock).mockResolvedValueOnce(
-      Promise.resolve({ json: () => Promise.resolve(expected), ok: true })
+    fetchMock.mockResponseOnce(
+      JSON.stringify({
+        city: "Moscow",
+        latitude: "55.68455",
+        longitude: "37.62203",
+      }),
+      {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }
     );
 
     const result = await geo.getGeo();
@@ -44,11 +50,16 @@ describe("Geo", () => {
   });
 
   it("should return error for unsuccessful request", async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce(
-      Promise.resolve({ json: () => Promise.resolve({}), ok: false })
-    );
+    fetchMock.mockResponseOnce(JSON.stringify({}), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
     const error = await getError(async () => geo.getGeo());
+
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(HttpError);
+    expect(error).toEqual(
+      new HttpError("Ошибка при запросе текущих координат")
+    );
   });
 });

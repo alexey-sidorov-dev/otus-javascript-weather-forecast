@@ -1,4 +1,4 @@
-import { Templater } from "../src/app/helpers/Templater";
+import { Templater } from "../src/components/Templater";
 
 describe("Templater", () => {
   it("should be a Templater class", () => {
@@ -15,6 +15,7 @@ describe("Templater", () => {
     expect(generator.template("Name is {{NAME}}", data)).toBe(
       `Name is ${data.NAME}`
     );
+    expect(generator.template("Name is {{NAME}}")).toBe(`Name is `);
     expect(generator.template("Name is {{NAME}} {{SURNAME}}~", data)).toBe(
       `Name is ${data.NAME} ~`
     );
@@ -50,6 +51,12 @@ describe("Templater", () => {
         data
       )
     ).toBe(`Name is ${data.NAME}. Number is 1234`);
+    expect(
+      generator.template(
+        "Name is {{NAME}}. Number is {{for props}}{{prop}}{{end for}}",
+        data
+      )
+    ).toBe(`Name is ${data.NAME}. Number is `);
   });
 
   it("should replace placeholders in if condition", () => {

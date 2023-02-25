@@ -1,8 +1,8 @@
-export type GeoData = { city: string };
-export type WeatherData = {
+export interface IWeatherData {
   data: [
     {
-      weather: { icon: string; description: string };
+      weather: { code: number; icon: string; description: string };
+      app_temp: number;
       temp: number;
       rh: number;
       lat: number;
@@ -11,4 +11,4 @@ export type WeatherData = {
       country_code: string;
     }
   ];
-};
+}

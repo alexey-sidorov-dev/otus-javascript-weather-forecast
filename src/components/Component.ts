@@ -1,18 +1,20 @@
-import { Events } from "../../types/component";
-import { GenericObject } from "../../types/objects";
+import { Events, ComponentState } from "../types/component";
+import { Templater } from "./Templater";
 
-export abstract class Component<State = GenericObject> {
-  private element: HTMLElement;
+export abstract class Component<State = ComponentState> {
+  protected element: HTMLElement;
 
-  protected state: State = {} as State;
+  protected state: State = <State>{};
 
-  protected events: Events = {} as Events;
+  protected events: Events = <Events>{};
+
+  protected templater: Templater;
 
   constructor(element: HTMLElement, initialState?: Partial<State>) {
     this.element = element;
-    this.state = initialState ? (initialState as State) : this.state;
+    this.templater = new Templater();
     setTimeout(() => {
-      this.element.innerHTML = this.render();
+      this.setState(<State>initialState);
       this.onMount();
     }, 0);
   }
@@ -26,7 +28,7 @@ export abstract class Component<State = GenericObject> {
     Object.keys(this.events).forEach((key) => {
       const [eventName, selector] = key.split("@");
       this.element.addEventListener(eventName, (event) => {
-        if ((event.target as HTMLElement).matches(selector)) {
+        if ((<HTMLElement>event.target).matches(selector)) {
           this.events[key](event);
         }
       });

@@ -1,5 +1,5 @@
-import { Config } from "./Config";
-import { HttpError } from "./helpers/HttpError";
+import { Config } from "../config/Config";
+import { HttpError } from "../helpers/HttpError";
 
 export class Geo {
   private apiUrl: string;

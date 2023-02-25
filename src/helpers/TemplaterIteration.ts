@@ -1,4 +1,4 @@
-import { ITemplaterIteration } from "../../interfaces/templater";
+import { ITemplaterIteration } from "../types/templater";
 
 export class TemplaterIteration implements ITemplaterIteration {
   index: number;
