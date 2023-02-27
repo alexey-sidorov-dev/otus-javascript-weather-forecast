@@ -17,6 +17,7 @@ export class HistoryComponent extends Component<HistoryState> {
   protected render(): string {
     return this.templater.template(
       `<ul class="history-list">` +
+        // FIXME:
         `{{for data}}<li class="history-list__item">{{city}}</li>{{end for}}` +
         `</ul>`,
       this.state.data

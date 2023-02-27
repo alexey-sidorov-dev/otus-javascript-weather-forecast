@@ -12,7 +12,7 @@ export class WeatherComponent extends Component<WeatherState> {
 
   protected render(): string {
     return this.templater.template(
-      `<img class="weather__icon" src="https://www.weatherbit.io/static/img/icons/{{icon}}" alt="icon">` +
+      `<img class="weather__icon" src="https://www.weatherbit.io/static/img/icons/{{icon}}.png" alt="icon">` +
         `<span class="weather__description">` +
         `{{description}}, Температура: {{temperature}}°C, Влажность: {{humidity}}%` +
         `</span>`,

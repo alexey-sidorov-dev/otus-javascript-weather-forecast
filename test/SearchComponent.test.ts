@@ -35,7 +35,7 @@ describe("SearchComponent", () => {
   it("should initialize SearchComponent without initial state", () => {
     const defaultState: SearchState = {
       infoType: "info",
-      infoText: "",
+      infoText: "Запрашиваем погоду в вашем городе...",
     };
     const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
     new SearchComponent(element);
@@ -45,14 +45,16 @@ describe("SearchComponent", () => {
     expect(element.innerHTML).toBe(
       `<input id="input" class="search__input" placeholder="Город" autofocus="">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
-        `<div id="info" class="search__info search-info"><span class="search-info__info"></span></div>`
+        `<div id="info" class="search__info search-info">` +
+        `<span class="search-info__info">Запрашиваем погоду в вашем городе...</span>` +
+        `</div>`
     );
   });
 
   it("should initialize SearchComponent state with initial state", () => {
     const defaultState: SearchState = {
       infoType: "info",
-      infoText: "",
+      infoText: "Запрашиваем погоду в вашем городе...",
     };
     const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
     new SearchComponent(element, {
@@ -76,7 +78,7 @@ describe("SearchComponent", () => {
   it("should set SearchComponent state", () => {
     const defaultState: SearchState = {
       infoType: "info",
-      infoText: "",
+      infoText: "Запрашиваем погоду в вашем городе...",
     };
     const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 import { App } from "../src/components/App";
 
 describe("App", () => {
@@ -25,7 +26,7 @@ describe("App", () => {
   });
 
   it("should create app layout", () => {
-    const app = new App(root);
+    new App(root);
 
     const expectedHTML = [
       '<div class="widget" id="widget">',

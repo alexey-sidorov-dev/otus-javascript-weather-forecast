@@ -2,9 +2,19 @@ import { Events, SearchState } from "../types/component";
 import { Component } from "./Component";
 
 export class SearchComponent extends Component<SearchState> {
+  private buttonClick = (ev: unknown) => {
+    console.log((ev as Event).type);
+    console.log("buttonClick", this.state);
+  };
+
+  private inputKeypress = (ev: unknown) => {
+    console.log("inputKeypress", this.state);
+    console.log(ev);
+  };
+
   protected state: SearchState = {
     infoType: "info",
-    infoText: "",
+    infoText: "Запрашиваем погоду в вашем городе...",
   };
 
   protected events: Events = {
@@ -12,7 +22,11 @@ export class SearchComponent extends Component<SearchState> {
     "keypress@#input": this.inputKeypress,
   };
 
-  constructor(element: HTMLElement, initialState?: Partial<SearchState>) {
+  constructor(
+    element: HTMLElement,
+    initialState?: Partial<SearchState>,
+    hooks?: GeneratorFunction
+  ) {
     super(element);
 
     this.setState({ ...this.state, ...initialState });
@@ -26,13 +40,5 @@ export class SearchComponent extends Component<SearchState> {
         `</div>`,
       this.state
     );
-  }
-
-  private buttonClick() {
-    console.log("buttonClick", this.state);
-  }
-
-  private inputKeypress() {
-    console.log("inputKeypress", this.state);
   }
 }

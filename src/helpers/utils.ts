@@ -1,3 +1,7 @@
+import { Config } from "../config/Config";
+import { GenericObject } from "../types/generic";
+import { IWeatherData } from "../types/weather";
+
 export function setAttributes(
   element: HTMLElement,
   attributes: Record<string, string> = {}
@@ -31,4 +35,49 @@ export function pull<T>(sourceArray: T[], ...removeList: T[]): T[] {
   const removeSet = new Set(removeList);
 
   return sourceArray.filter((el) => !removeSet.has(el));
+}
+
+export function normalizeTarget(targetData: unknown) {
+  let normalizedTarget = {};
+
+  if (
+    targetData &&
+    typeof targetData === "object" &&
+    new Config().geoApiUrl.includes("ipgeolocation.io")
+  ) {
+    normalizedTarget = {
+      ...normalizedTarget,
+      city: getProperty(<GenericObject>targetData, "data[0].city_name"),
+      country: getProperty(<GenericObject>targetData, "data[0].country_code"),
+      latitude: getProperty(<GenericObject>targetData, "data[0].lat"),
+      longitude: getProperty(<GenericObject>targetData, "data[0].lon"),
+    };
+  }
+
+  return normalizedTarget;
+}
+
+export function normalizeWeather(weatherData: unknown) {
+  let normalizedWeather = {};
+
+  if (new Config().weatherApiUrl.includes("weatherbit.io")) {
+    const {
+      data: [
+        {
+          weather: { icon, description },
+          temp: temperature,
+          rh: humidity,
+        },
+      ],
+    } = <IWeatherData>weatherData;
+    normalizedWeather = {
+      ...normalizedWeather,
+      icon,
+      description,
+      temperature,
+      humidity,
+    };
+  }
+
+  return normalizedWeather;
 }

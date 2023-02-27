@@ -1,12 +1,25 @@
 import { Component } from "./Component";
-
 import { SearchComponent } from "./SearchComponent";
 import { WeatherComponent } from "./WeatherComponent";
 import { MapComponent } from "./MapComponent";
 import { HistoryComponent } from "./HistoryComponent";
 import { AppState } from "../types/component";
+import { Geo } from "../api/Geo";
+import { Config } from "../config/Config";
+import { Weather } from "../api/Weather";
+import { IGeoData } from "../types/geo";
+import { normalizeTarget, normalizeWeather } from "../helpers/utils";
+import { History } from "../api/History";
 
 export class App extends Component<AppState> {
+  protected config = new Config();
+
+  protected geo = new Geo(this.config);
+
+  protected weather = new Weather(this.config);
+
+  protected history = new History(this.config);
+
   protected state = <AppState>{ title: "Прогноз погоды" };
 
   constructor(root: HTMLElement, initialState?: Partial<AppState>) {
@@ -33,12 +46,28 @@ export class App extends Component<AppState> {
     );
   }
 
-  protected onMount(): void {
+  protected async onMount(): Promise<void> {
     super.onMount();
-    /* eslint-disable no-new */
-    new SearchComponent(<HTMLElement>document.getElementById("search"));
-    new WeatherComponent(<HTMLElement>document.getElementById("weather"));
-    new MapComponent(<HTMLElement>document.getElementById("map"));
-    new HistoryComponent(<HTMLElement>document.getElementById("history"));
+
+    try {
+      const userGeo = await this.geo.getGeo();
+      const userWeather = await this.weather.getWeather(<IGeoData>userGeo);
+
+      /* eslint-disable no-new */
+      new SearchComponent(<HTMLElement>document.getElementById("search"));
+      new WeatherComponent(
+        <HTMLElement>document.getElementById("weather"),
+        normalizeWeather(userWeather)
+      );
+      new MapComponent(
+        <HTMLElement>document.getElementById("map"),
+        normalizeTarget(userGeo)
+      );
+      new HistoryComponent(<HTMLElement>document.getElementById("history"), {
+        data: await this.history.read(),
+      });
+    } catch (error) {
+      new SearchComponent(<HTMLElement>document.getElementById("search"));
+    }
   }
 }
