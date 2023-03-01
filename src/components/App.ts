@@ -61,7 +61,7 @@ export class App extends Component<AppState> {
       );
       new MapComponent(
         <HTMLElement>document.getElementById("map"),
-        normalizeTarget(userGeo)
+        normalizeTarget(userWeather)
       );
       new HistoryComponent(<HTMLElement>document.getElementById("history"), {
         data: await this.history.read(),

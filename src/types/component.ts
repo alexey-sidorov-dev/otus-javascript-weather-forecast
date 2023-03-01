@@ -4,11 +4,6 @@ export type Events = Record<string, (ev: Event) => void>;
 
 export type ComponentState = Record<string, unknown>;
 
-export interface MapState extends MapTarget {
-  initZoom: number;
-  maxZoom: number;
-}
-
 export interface HistoryState {
   itemsCount: number;
   data: Array<string>;

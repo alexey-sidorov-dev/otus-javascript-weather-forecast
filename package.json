@@ -70,7 +70,6 @@
     "jest-environment-jsdom": "^29.4.3",
     "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^13.1.2",
-    "lodash-webpack-plugin": "^0.11.6",
     "mini-css-extract-plugin": "^2.7.2",
     "prettier": "^2.8.4",
     "prettier-plugin-packagejson": "^2.4.3",

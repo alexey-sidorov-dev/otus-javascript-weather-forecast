@@ -1,38 +1,36 @@
 import { map, tileLayer, Map as LeafletMap, LatLng } from "leaflet";
-import { Component } from "./Component";
 import { DataError } from "../helpers/DataError";
 import { Config } from "../config/Config";
-import { MapState } from "../types/component";
-import { MapTarget } from "../types/map";
+import { MapState, MapTarget, IMapComponent } from "../types/map";
+import { Events } from "../types/component";
 
-export class MapComponent extends Component<MapState> {
-  private instance: LeafletMap;
+export class MapComponent implements IMapComponent {
+  protected instance: LeafletMap;
 
-  protected state: MapState = {} as MapState;
+  protected state: MapState = <MapState>{};
 
-  constructor(container: HTMLElement, initialState?: Partial<MapState>) {
-    super(container);
+  protected element: HTMLElement;
 
+  protected events: Events = <Events>{};
+
+  constructor(element: HTMLElement, initialState?: Partial<MapState>) {
+    this.element = element;
     const { mapInitZoom: initZoom, mapMaxZoom: maxZoom } = new Config();
-    this.instance = map(container);
+    this.instance = map(element);
     this.setState({ initZoom, maxZoom, ...initialState });
   }
 
-  protected render(): string {
-    return this.templater.template("", this.state);
-  }
-
   setState(patch: Partial<MapState>): void {
-    super.setState(patch);
+    this.state = { ...this.state, ...patch };
 
-    if (patch.latitude !== undefined && patch.longitude !== undefined) {
-      this.displayMap({ latitude: patch.latitude, longitude: patch.longitude });
+    if (this.state.latitude && this.state.longitude) {
+      this.displayMap(this.state);
     }
   }
 
-  private displayMap(data: MapTarget) {
-    const latitude = +data.latitude;
-    const longitude = +data.longitude;
+  private displayMap(target: MapTarget) {
+    const latitude = +target.latitude;
+    const longitude = +target.longitude;
     if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
       throw new DataError("The error occurs on displaying map");
     }
