@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 import { MapComponent } from "../src/components/MapComponent";
 import { Config } from "../src/config/Config";
-import { MapState } from "../src/types/map";
+import { MapState } from "../src/types/component";
 
 describe("MapComponent", () => {
   let root: HTMLDivElement;

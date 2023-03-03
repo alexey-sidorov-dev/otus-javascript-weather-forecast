@@ -1,8 +1,8 @@
 import { map, tileLayer, Map as LeafletMap, LatLng } from "leaflet";
 import { DataError } from "../helpers/DataError";
 import { Config } from "../config/Config";
-import { MapState, MapTarget, IMapComponent } from "../types/map";
-import { Events } from "../types/component";
+import { MapTarget, IMapComponent } from "../types/map";
+import { Events, MapState } from "../types/component";
 
 export class MapComponent implements IMapComponent {
   protected instance: LeafletMap;

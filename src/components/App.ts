@@ -3,7 +3,7 @@ import { SearchComponent } from "./SearchComponent";
 import { WeatherComponent } from "./WeatherComponent";
 import { MapComponent } from "./MapComponent";
 import { HistoryComponent } from "./HistoryComponent";
-import { AppState } from "../types/component";
+import { AppState, Events } from "../types/component";
 import { Geo } from "../api/Geo";
 import { Config } from "../config/Config";
 import { Weather } from "../api/Weather";
@@ -48,13 +48,23 @@ export class App extends Component<AppState> {
 
   protected async onMount(): Promise<void> {
     super.onMount();
+    /* eslint-disable no-new */
+    const search = new SearchComponent(
+      <HTMLElement>document.getElementById("search"),
+      {},
+      {
+        "search:weather": [
+          () => {
+            console.log(Date.now());
+          },
+        ],
+      }
+    );
 
     try {
       const userGeo = await this.geo.getGeo();
       const userWeather = await this.weather.getWeather(<IGeoData>userGeo);
 
-      /* eslint-disable no-new */
-      new SearchComponent(<HTMLElement>document.getElementById("search"));
       new WeatherComponent(
         <HTMLElement>document.getElementById("weather"),
         normalizeWeather(userWeather)
@@ -67,7 +77,10 @@ export class App extends Component<AppState> {
         data: await this.history.read(),
       });
     } catch (error) {
-      new SearchComponent(<HTMLElement>document.getElementById("search"));
+      search.setState({
+        infoType: "error",
+        infoText: "При запросе погоды произошла ошибка",
+      });
     }
   }
 }
