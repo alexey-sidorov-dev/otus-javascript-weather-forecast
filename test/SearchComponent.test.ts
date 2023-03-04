@@ -43,7 +43,7 @@ describe("SearchComponent", () => {
     expect(setStateSpy).toHaveBeenCalledTimes(1);
     expect(setStateSpy).toHaveBeenCalledWith(defaultState);
     expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город" autofocus="">` +
+      `<input id="input" class="search__input" placeholder="Город">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
         `<div id="info" class="search__info search-info">` +
         `<span class="search-info__info">Запрашиваем погоду в вашем городе...</span>` +
@@ -69,7 +69,7 @@ describe("SearchComponent", () => {
       },
     });
     expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город" autofocus="">` +
+      `<input id="input" class="search__input" placeholder="Город">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
         `<div id="info" class="search__info search-info"><span class="search-info__info">Info</span></div>`
     );
@@ -102,7 +102,7 @@ describe("SearchComponent", () => {
       },
     });
     expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город" autofocus="">` +
+      `<input id="input" class="search__input" placeholder="Город">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
         `<div id="info" class="search__info search-info"><span class="search-info__error">Error</span></div>`
     );

@@ -20,13 +20,12 @@ export class MapComponent implements IMapComponent {
     this.setState({ initZoom, maxZoom, ...initialState });
   }
 
-  setState(patch: Partial<MapState>): void {
+  setState = (patch: Partial<MapState>) => {
     this.state = { ...this.state, ...patch };
-
     if (this.state.latitude && this.state.longitude) {
       this.displayMap(this.state);
     }
-  }
+  };
 
   private displayMap(target: MapTarget) {
     const latitude = +target.latitude;

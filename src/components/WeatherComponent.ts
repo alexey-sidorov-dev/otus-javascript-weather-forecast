@@ -10,6 +10,11 @@ export class WeatherComponent extends Component<WeatherState> {
     this.setState({ ...this.state, ...initialState });
   }
 
+  setState = (patch: Partial<WeatherState>) => {
+    this.state = { ...this.state, ...patch };
+    this.element.innerHTML = this.render();
+  };
+
   protected render(): string {
     return this.templater.template(
       `<img class="weather__icon" src="https://www.weatherbit.io/static/img/icons/{{icon}}.png" alt="icon">` +

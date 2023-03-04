@@ -1,8 +1,8 @@
 export type Events = { [event: string]: (ev: Event) => void };
 
-export type Hook = (...args: any[]) => void;
+export type Listener = (...args: any[]) => void;
 
-export type Hooks = { [event: string]: Hook[] };
+export type Listeners = { [event: string]: Listener[] };
 
 export type ComponentState = Record<string, any>;
 
@@ -16,7 +16,7 @@ export type WeatherState = Pick<
 >;
 export type MapState = Pick<
   AppState,
-  "latitude" | "longitude" | "initZoom" | "maxZoom"
+  "latitude" | "longitude" | "initZoom" | "maxZoom" | "city" | "country"
 >;
 
 export type AppState = {
@@ -29,6 +29,8 @@ export type AppState = {
   icon: string;
   itemsCount: number;
   data: Array<string>;
+  city: string;
+  country: string;
   latitude: string | number;
   longitude: string | number;
   initZoom: number;

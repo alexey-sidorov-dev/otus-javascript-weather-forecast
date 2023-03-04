@@ -1,26 +1,24 @@
-import { Events, ComponentState, Hooks } from "../types/component";
+import {
+  Events,
+  ComponentState,
+  Listeners,
+  Listener,
+} from "../types/component";
 import { Templater } from "./Templater";
 
 export abstract class Component<State = ComponentState> {
   protected element: HTMLElement;
 
-  protected isMounted = false;
-
   protected state: State = <State>{};
-
-  protected events: Events = <Events>{};
-
-  protected hooks: Hooks = <Hooks>{};
 
   protected templater: Templater;
 
-  constructor(
-    element: HTMLElement,
-    initialState?: Partial<State>,
-    hooks?: Hooks
-  ) {
+  protected events: Events = <Events>{};
+
+  protected readonly listeners: Listeners = <Listeners>{};
+
+  constructor(element: HTMLElement, initialState?: Partial<State>) {
     this.element = element;
-    this.hooks = <Hooks>hooks;
     this.templater = new Templater();
     setTimeout(() => {
       this.setState(<State>initialState);
@@ -44,15 +42,29 @@ export abstract class Component<State = ComponentState> {
     });
   }
 
-  protected emit(event: string, ...args: any[]): void {
-    if (typeof this.hooks[event] !== "object" || !this.isMounted) return;
+  public on(ev: string, listener: Listener): () => void {
+    if (typeof this.listeners[ev] !== "object") {
+      this.listeners[ev] = [];
+    }
 
-    [...this.hooks[event]].forEach((hook) => hook.apply(this, args));
+    this.listeners[ev].push(listener);
+    return () => this.off(ev, listener);
+  }
+
+  public off(ev: string, listener: Listener): void {
+    if (typeof this.listeners[ev] !== "object") return;
+
+    const idx: number = this.listeners[ev].indexOf(listener);
+    if (idx > -1) this.listeners[ev].splice(idx, 1);
+  }
+
+  protected emit(ev: string, ...args: any[]): void {
+    if (typeof this.listeners[ev] !== "object") return;
+    [...this.listeners[ev]].forEach((listener) => listener.apply(this, args));
   }
 
   protected onMount(): void {
     this.subscribe();
-    this.isMounted = true;
   }
 
   protected abstract render(): string;

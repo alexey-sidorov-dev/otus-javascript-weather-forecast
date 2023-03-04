@@ -3,7 +3,7 @@ import { SearchComponent } from "./SearchComponent";
 import { WeatherComponent } from "./WeatherComponent";
 import { MapComponent } from "./MapComponent";
 import { HistoryComponent } from "./HistoryComponent";
-import { AppState, Events } from "../types/component";
+import { AppState } from "../types/component";
 import { Geo } from "../api/Geo";
 import { Config } from "../config/Config";
 import { Weather } from "../api/Weather";
@@ -13,12 +13,6 @@ import { History } from "../api/History";
 
 export class App extends Component<AppState> {
   protected config = new Config();
-
-  protected geo = new Geo(this.config);
-
-  protected weather = new Weather(this.config);
-
-  protected history = new History(this.config);
 
   protected state = <AppState>{ title: "Прогноз погоды" };
 
@@ -48,36 +42,35 @@ export class App extends Component<AppState> {
 
   protected async onMount(): Promise<void> {
     super.onMount();
-    /* eslint-disable no-new */
-    const search = new SearchComponent(
-      <HTMLElement>document.getElementById("search"),
-      {},
-      {
-        "search:weather": [
-          () => {
-            console.log(Date.now());
-          },
-        ],
-      }
+    const searchComponent = new SearchComponent(
+      <HTMLElement>document.getElementById("search")
     );
 
     try {
-      const userGeo = await this.geo.getGeo();
-      const userWeather = await this.weather.getWeather(<IGeoData>userGeo);
+      const userGeo = await new Geo(this.config).getGeo();
+      const userWeather = await new Weather(this.config).getWeather(
+        <IGeoData>userGeo
+      );
 
-      new WeatherComponent(
+      const weatherComponent = new WeatherComponent(
         <HTMLElement>document.getElementById("weather"),
         normalizeWeather(userWeather)
       );
-      new MapComponent(
+      const mapComponent = new MapComponent(
         <HTMLElement>document.getElementById("map"),
         normalizeTarget(userWeather)
       );
-      new HistoryComponent(<HTMLElement>document.getElementById("history"), {
-        data: await this.history.read(),
-      });
+      const historyComponent = new HistoryComponent(
+        <HTMLElement>document.getElementById("history"),
+        {
+          data: await new History(this.config).read(),
+        }
+      );
+
+      searchComponent.on("weather:display", weatherComponent.setState);
+      searchComponent.on("map:display", mapComponent.setState);
     } catch (error) {
-      search.setState({
+      searchComponent.setState({
         infoType: "error",
         infoText: "При запросе погоды произошла ошибка",
       });
