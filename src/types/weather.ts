@@ -1,4 +1,4 @@
-export interface IWeatherData {
+export type WeatherData = {
   data: [
     {
       weather: { code: number; icon: string; description: string };
@@ -11,4 +11,4 @@ export interface IWeatherData {
       country_code: string;
     }
   ];
-}
+};

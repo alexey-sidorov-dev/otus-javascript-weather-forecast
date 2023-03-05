@@ -7,7 +7,7 @@ import { AppState } from "../types/component";
 import { Geo } from "../api/Geo";
 import { Config } from "../config/Config";
 import { Weather } from "../api/Weather";
-import { IGeoData } from "../types/geo";
+import { GeoData } from "../types/geo";
 import { normalizeTarget, normalizeWeather } from "../helpers/utils";
 import { History } from "../api/History";
 
@@ -49,7 +49,7 @@ export class App extends Component<AppState> {
     try {
       const userGeo = await new Geo(this.config).getGeo();
       const userWeather = await new Weather(this.config).getWeather(
-        <IGeoData>userGeo
+        <GeoData>userGeo
       );
 
       const weatherComponent = new WeatherComponent(
@@ -61,14 +61,12 @@ export class App extends Component<AppState> {
         normalizeTarget(userWeather)
       );
       const historyComponent = new HistoryComponent(
-        <HTMLElement>document.getElementById("history"),
-        {
-          data: await new History(this.config).read(),
-        }
+        <HTMLElement>document.getElementById("history")
       );
 
       searchComponent.on("weather:display", weatherComponent.setState);
       searchComponent.on("map:display", mapComponent.setState);
+      // searchComponent.on("info:display", searchComponent.setState);
     } catch (error) {
       searchComponent.setState({
         infoType: "error",

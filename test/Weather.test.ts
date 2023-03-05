@@ -5,7 +5,7 @@ import { HttpError } from "../src/helpers/HttpError";
 import { DataError } from "../src/helpers/DataError";
 import { NoErrorThrownError } from "./helpers/NoErrorThrownError";
 import { getError } from "./helpers/utils";
-import { IWeatherData } from "../src/types/weather";
+import { WeatherData } from "../src/types/weather";
 
 describe("Weather", () => {
   const config = new Config();
@@ -32,7 +32,7 @@ describe("Weather", () => {
   });
 
   it("should return weather data for city", async () => {
-    const expected: IWeatherData = {
+    const expected: WeatherData = {
       data: [
         {
           app_temp: -22.3,

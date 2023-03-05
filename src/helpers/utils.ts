@@ -1,6 +1,7 @@
 import { Config } from "../config/Config";
 import { GenericObject } from "../types/generic";
-import { IWeatherData } from "../types/weather";
+import { MapTarget } from "../types/map";
+import { WeatherData } from "../types/weather";
 
 export function setAttributes(
   element: HTMLElement,
@@ -37,7 +38,7 @@ export function pull<T>(sourceArray: T[], ...removeList: T[]): T[] {
   return sourceArray.filter((el) => !removeSet.has(el));
 }
 
-export function normalizeTarget(targetData: unknown) {
+export function normalizeTarget(targetData: unknown): MapTarget {
   let normalizedTarget = {};
 
   if (
@@ -54,7 +55,7 @@ export function normalizeTarget(targetData: unknown) {
     };
   }
 
-  return normalizedTarget;
+  return <MapTarget>normalizedTarget;
 }
 
 export function normalizeWeather(weatherData: unknown) {
@@ -69,7 +70,7 @@ export function normalizeWeather(weatherData: unknown) {
           rh: humidity,
         },
       ],
-    } = <IWeatherData>weatherData;
+    } = <WeatherData>weatherData;
     normalizedWeather = {
       ...normalizedWeather,
       icon,

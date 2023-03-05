@@ -14,15 +14,32 @@ export class SearchComponent extends Component<SearchState> {
   private buttonClick = async () => {
     if (this.input && this.input.value) {
       try {
+        // this.setState({
+        //   infoType: "info",
+        //   infoText: `Запрашиваем погоду в городе ${this.input.value}`,
+        // });
         const data = await this.weather?.getWeather({
           city: this.input.value,
         });
         this.input.value = "";
         this.input.focus();
-        this.emit("weather:display", normalizeWeather(data));
-        this.emit("map:display", normalizeTarget(data));
+        const normalizedTarget = normalizeTarget(data);
+        const normalizedWeather = normalizeWeather(data);
+        // this.emit("info:display", {
+        //   infoType: "info",
+        //   infoText: `Погода в городе ${normalizedTarget.city}, ${normalizedTarget.country}`,
+        // });
+        this.setState({
+          infoType: "info",
+          infoText: `Погода в городе ${normalizedTarget.city}, ${normalizedTarget.country}`,
+        });
+        this.emit("weather:display", normalizedWeather);
+        this.emit("map:display", normalizedTarget);
       } catch (error) {
-        this.emit("weather:error", error);
+        this.setState({
+          infoType: "error",
+          infoText: `При запросе погоды произошла ошибка`,
+        });
       }
     }
   };
@@ -47,6 +64,11 @@ export class SearchComponent extends Component<SearchState> {
     super(element);
     this.setState({ ...this.state, ...initialState });
   }
+
+  setState = (patch: Partial<SearchState>) => {
+    this.state = { ...this.state, ...patch };
+    this.element.innerHTML = this.render();
+  };
 
   protected onMount(): void {
     super.onMount();

@@ -37,11 +37,8 @@ describe("SearchComponent", () => {
       infoType: "info",
       infoText: "Запрашиваем погоду в вашем городе...",
     };
-    const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
     new SearchComponent(element);
 
-    expect(setStateSpy).toHaveBeenCalledTimes(1);
-    expect(setStateSpy).toHaveBeenCalledWith(defaultState);
     expect(element.innerHTML).toBe(
       `<input id="input" class="search__input" placeholder="Город">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
@@ -56,18 +53,10 @@ describe("SearchComponent", () => {
       infoType: "info",
       infoText: "Запрашиваем погоду в вашем городе...",
     };
-    const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
     new SearchComponent(element, {
       infoText: "Info",
     });
 
-    expect(setStateSpy).toHaveBeenCalledTimes(1);
-    expect(setStateSpy).toHaveBeenCalledWith({
-      ...defaultState,
-      ...{
-        infoText: "Info",
-      },
-    });
     expect(element.innerHTML).toBe(
       `<input id="input" class="search__input" placeholder="Город">` +
         `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
@@ -80,12 +69,8 @@ describe("SearchComponent", () => {
       infoType: "info",
       infoText: "Запрашиваем погоду в вашем городе...",
     };
-    const setStateSpy = jest.spyOn(SearchComponent.prototype, "setState");
 
     const search = new SearchComponent(element);
-
-    expect(setStateSpy).toHaveBeenCalledTimes(1);
-    expect(setStateSpy).toHaveBeenLastCalledWith({ ...defaultState });
 
     jest.spyOn(search, "setState");
     search.setState({
@@ -93,7 +78,7 @@ describe("SearchComponent", () => {
       infoText: "Error",
     });
 
-    expect(search.setState).toHaveBeenCalledTimes(2);
+    expect(search.setState).toHaveBeenCalledTimes(1);
     expect(search.setState).toHaveBeenLastCalledWith({
       ...defaultState,
       ...{

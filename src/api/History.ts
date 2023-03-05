@@ -1,4 +1,4 @@
-import { IHistory, IStorage, IHistoryData } from "../types/history";
+import { IHistory, IStorage, HistoryData } from "../types/history";
 import { Config } from "../config/Config";
 import { Storage } from "./Storage";
 
@@ -31,8 +31,12 @@ export class History implements IHistory {
     return this.storage.read();
   }
 
-  async update(data: IHistoryData) {
+  async update(data: HistoryData) {
     this.storage.update(data);
+  }
+
+  async delete(data: HistoryData) {
+    this.storage.delete(data);
   }
 
   async clear() {

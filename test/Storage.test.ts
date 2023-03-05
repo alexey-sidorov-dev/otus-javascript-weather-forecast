@@ -1,5 +1,6 @@
 import { Storage } from "../src/api/Storage";
 import { Config } from "../src/config/Config";
+import { HistoryData } from "../src/types/history";
 
 describe("Storage", () => {
   const config = new Config();
@@ -7,18 +8,18 @@ describe("Storage", () => {
     dataIdentifier: config.historyDataIdentifier,
     itemsCount: config.historyItemsCount,
   });
-  const city1 = "City1";
-  const city2 = "City2";
-  const cities = [
-    "City11",
-    "City12",
-    "City13",
-    "City14",
-    "City15",
-    "City16",
-    "City17",
-    "City18",
-    "City19",
+  const data1: HistoryData = { city: "City1" };
+  const data2: HistoryData = { city: "City2" };
+  const cities: Array<HistoryData> = [
+    { city: "City11" },
+    { city: "City12" },
+    { city: "City13" },
+    { city: "City14" },
+    { city: "City15" },
+    { city: "City16" },
+    { city: "City17" },
+    { city: "City18" },
+    { city: "City19" },
   ];
 
   afterEach(() => {
@@ -30,45 +31,52 @@ describe("Storage", () => {
   });
 
   it("should add city to the beginnig", () => {
-    storage.update({ city: city1 });
-    storage.update({ city: city2 });
+    storage.update(data1);
+    storage.update(data2);
 
-    expect(storage.read()).toStrictEqual([city2, city1]);
+    expect(storage.read()).toStrictEqual([data2, data1]);
   });
 
   it("should save no more then 10 items in the history", () => {
     cities.forEach((item) => {
-      storage.update({ city: item });
+      storage.update(item);
     });
-    storage.update({ city: city1 });
-    storage.update({ city: city2 });
+    storage.update(data1);
+    storage.update(data2);
     const data = storage.read();
 
     expect(data).toStrictEqual([
-      city2,
-      city1,
-      "City19",
-      "City18",
-      "City17",
-      "City16",
-      "City15",
-      "City14",
-      "City13",
-      "City12",
+      data2,
+      data1,
+      { city: "City19" },
+      { city: "City18" },
+      { city: "City17" },
+      { city: "City16" },
+      { city: "City15" },
+      { city: "City14" },
+      { city: "City13" },
+      { city: "City12" },
     ]);
   });
 
   it("should not repeat items in the history", () => {
-    storage.update({ city: city1 });
-    storage.update({ city: city2 });
-    storage.update({ city: city1 });
+    storage.update(data1);
+    storage.update(data2);
+    storage.update(data1);
 
-    expect(storage.read()).toStrictEqual([city1, city2]);
+    expect(storage.read()).toStrictEqual([data1, data2]);
+  });
+
+  it("should delete data from history", () => {
+    storage.update(data1);
+    storage.update(data2);
+    storage.delete(data1);
+    expect(storage.read()).toStrictEqual([data2]);
   });
 
   it("should clear data from history", () => {
-    storage.update({ city: city1 });
-    storage.update({ city: city2 });
+    storage.update(data1);
+    storage.update(data2);
     storage.clear();
     expect(storage.read()).toStrictEqual([]);
   });

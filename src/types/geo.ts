@@ -1,3 +1,3 @@
-export interface IGeoData {
+export type GeoData = {
   city: string;
-}
+};
