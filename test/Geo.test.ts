@@ -27,17 +27,20 @@ describe("Geo", () => {
   });
 
   it("should return geo data for successful request", async () => {
+    const latitude = Math.random();
+    const longitude = Math.random();
+    const city = String(Math.random());
     const expected = {
-      city: "Moscow",
-      latitude: "55.68455",
-      longitude: "37.62203",
+      city,
+      latitude,
+      longitude,
     };
 
     fetchMock.mockResponseOnce(
       JSON.stringify({
-        city: "Moscow",
-        latitude: "55.68455",
-        longitude: "37.62203",
+        city,
+        latitude,
+        longitude,
       }),
       {
         status: 200,
@@ -58,8 +61,6 @@ describe("Geo", () => {
 
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(HttpError);
-    expect(error).toEqual(
-      new HttpError("Ошибка при запросе текущих координат")
-    );
+    expect(error).toEqual(new HttpError("Ошибка при запросе координат"));
   });
 });

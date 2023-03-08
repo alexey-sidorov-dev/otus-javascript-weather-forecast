@@ -1,8 +1,8 @@
 import { map, tileLayer, Map as LeafletMap, LatLng } from "leaflet";
 import { DataError } from "../helpers/DataError";
 import { Config } from "../config/Config";
-import { MapTarget, IMapComponent } from "../types/map";
-import { Events, MapState } from "../types/component";
+import { MapTarget, IMapComponent, Events, MapState } from "../types/component";
+import { normalizeTarget } from "../helpers/utils";
 
 export class MapComponent implements IMapComponent {
   protected instance: LeafletMap;
@@ -20,18 +20,22 @@ export class MapComponent implements IMapComponent {
     this.setState({ initZoom, maxZoom, ...initialState });
   }
 
-  setState = (patch: Partial<MapState>) => {
+  setState(patch: Partial<MapState>): void {
     this.state = { ...this.state, ...patch };
     if (this.state.latitude && this.state.longitude) {
       this.displayMap(this.state);
     }
+  }
+
+  updateState = (data: unknown) => {
+    this.setState(normalizeTarget(data));
   };
 
   private displayMap(target: MapTarget) {
     const latitude = +target.latitude;
     const longitude = +target.longitude;
     if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
-      throw new DataError("The error occurs on displaying map");
+      throw new DataError("При отображении карты произошла ошибка");
     }
 
     const targetLatLng = new LatLng(latitude, longitude);

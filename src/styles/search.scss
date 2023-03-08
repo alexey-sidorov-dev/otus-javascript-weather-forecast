@@ -32,22 +32,4 @@ $border-radius: 6px;
       transform: translateY(1px);
     }
   }
-
-  &__info {
-    margin: 1rem;
-  }
-}
-
-.search-info {
-  text-align: center;
-  font-size: 1rem;
-  font-style: italic;
-
-  &__info {
-    color: $second-color;
-  }
-
-  &__error {
-    color: $error-color;
-  }
 }

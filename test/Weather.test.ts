@@ -5,7 +5,7 @@ import { HttpError } from "../src/helpers/HttpError";
 import { DataError } from "../src/helpers/DataError";
 import { NoErrorThrownError } from "./helpers/NoErrorThrownError";
 import { getError } from "./helpers/utils";
-import { WeatherData } from "../src/types/weather";
+import { WeatherData } from "../src/types/api";
 
 describe("Weather", () => {
   const config = new Config();
@@ -18,20 +18,22 @@ describe("Weather", () => {
   });
 
   it("should be called with correct url", async () => {
+    const city = String(Math.random());
     fetchMock.mockResponseOnce(JSON.stringify({}), {
       status: 200,
       headers: { "content-type": "application/json" },
     });
 
-    await weather.getWeather({ city: "Moscow" });
+    await weather.getWeather({ city });
 
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}?key=${config.weatherApiKey}&units=${config.units}&lang=${config.language}&city=Moscow`
+      `${apiUrl}?key=${config.weatherApiKey}&units=${config.units}&lang=${config.language}&city=${city}`
     );
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it("should return weather data for city", async () => {
+    const city = String(Math.random());
     const expected: WeatherData = {
       data: [
         {
@@ -40,7 +42,7 @@ describe("Weather", () => {
           lon: 39.8546,
           rh: 79,
           temp: -17.3,
-          city_name: "Moscow",
+          city_name: city,
           country_code: "RU",
           weather: {
             code: 803,
@@ -60,7 +62,7 @@ describe("Weather", () => {
             lon: 39.8546,
             rh: 79,
             temp: -17.3,
-            city_name: "Moscow",
+            city_name: city,
             country_code: "RU",
             weather: {
               code: 803,
@@ -75,7 +77,7 @@ describe("Weather", () => {
         headers: { "content-type": "application/json" },
       }
     );
-    const result = await weather.getWeather({ city: "Moscow" });
+    const result = await weather.getWeather({ city });
 
     expect(result).toStrictEqual(expected);
   });
@@ -87,7 +89,7 @@ describe("Weather", () => {
   });
 
   it("should return error for unsuccessful 404 request", async () => {
-    const geo = { city: "Moscow" };
+    const geo = { city: String(Math.random()) };
     fetchMock.mockResponseOnce(JSON.stringify({}), {
       status: 404,
       headers: { "content-type": "application/json" },
@@ -104,15 +106,14 @@ describe("Weather", () => {
   });
 
   it("should return error for unsuccessful 204 request", async () => {
-    const geo = { city: "Moscow" };
+    const city = String(Math.random());
+    const geo = { city };
     fetchMock.mockResponseOnce(JSON.stringify({}), {
       status: 204,
       headers: { "content-type": "application/json" },
     });
 
-    const error = await getError(async () =>
-      weather.getWeather({ city: "Moscow" })
-    );
+    const error = await getError(async () => weather.getWeather({ city }));
 
     expect(error).not.toBeInstanceOf(NoErrorThrownError);
     expect(error).toBeInstanceOf(HttpError);

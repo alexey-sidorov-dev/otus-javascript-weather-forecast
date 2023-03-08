@@ -1,6 +1,6 @@
 import "modern-css-reset";
 import "./styles/style.scss";
-import { App } from "./components/App";
+import { AppComponent as App } from "./components/AppComponent";
 
 (async () => {
   const root = document.getElementById("app");

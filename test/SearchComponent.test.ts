@@ -1,6 +1,5 @@
 /* eslint-disable no-new */
 import { SearchComponent } from "../src/components/SearchComponent";
-import { SearchState } from "../src/types/component";
 
 describe("SearchComponent", () => {
   let root: HTMLDivElement;
@@ -33,63 +32,11 @@ describe("SearchComponent", () => {
   });
 
   it("should initialize SearchComponent without initial state", () => {
-    const defaultState: SearchState = {
-      infoType: "info",
-      infoText: "Запрашиваем погоду в вашем городе...",
-    };
     new SearchComponent(element);
 
     expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город">` +
-        `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
-        `<div id="info" class="search__info search-info">` +
-        `<span class="search-info__info">Запрашиваем погоду в вашем городе...</span>` +
-        `</div>`
-    );
-  });
-
-  it("should initialize SearchComponent state with initial state", () => {
-    const defaultState: SearchState = {
-      infoType: "info",
-      infoText: "Запрашиваем погоду в вашем городе...",
-    };
-    new SearchComponent(element, {
-      infoText: "Info",
-    });
-
-    expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город">` +
-        `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
-        `<div id="info" class="search__info search-info"><span class="search-info__info">Info</span></div>`
-    );
-  });
-
-  it("should set SearchComponent state", () => {
-    const defaultState: SearchState = {
-      infoType: "info",
-      infoText: "Запрашиваем погоду в вашем городе...",
-    };
-
-    const search = new SearchComponent(element);
-
-    jest.spyOn(search, "setState");
-    search.setState({
-      infoType: "error",
-      infoText: "Error",
-    });
-
-    expect(search.setState).toHaveBeenCalledTimes(1);
-    expect(search.setState).toHaveBeenLastCalledWith({
-      ...defaultState,
-      ...{
-        infoType: "error",
-        infoText: "Error",
-      },
-    });
-    expect(element.innerHTML).toBe(
-      `<input id="input" class="search__input" placeholder="Город">` +
-        `<button id="button" class="search__button" type="button">Узнать погоду</button>` +
-        `<div id="info" class="search__info search-info"><span class="search-info__error">Error</span></div>`
+      `<input id="input" class="search__input" placeholder="Город" autofocus="">` +
+        `<button id="button" class="search__button" type="button">Узнать погоду</button>`
     );
   });
 });

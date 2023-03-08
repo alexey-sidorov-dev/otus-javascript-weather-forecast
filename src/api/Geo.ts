@@ -12,7 +12,7 @@ export class Geo {
     const url = this.apiUrl;
     const response = await fetch(url);
     if (!response.ok) {
-      throw new HttpError("Ошибка при запросе текущих координат");
+      throw new HttpError("Ошибка при запросе координат");
     }
 
     return response.json();

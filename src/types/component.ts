@@ -1,34 +1,53 @@
+import { HistoryData } from "./api";
+import { GenericObject } from "./generic";
+
 export type Events = { [event: string]: (ev: Event) => void };
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type Listener = (...args: any[]) => void;
 
 export type Listeners = { [event: string]: Listener[] };
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type ComponentState = Record<string, any>;
 
-export type HistoryState = Pick<AppState, "itemsCount" | "data">;
+export type AppState = GenericObject;
 
-export type SearchState = Pick<AppState, "infoText" | "infoType">;
+export type SearchState = GenericObject;
+
+export type InfoState = Pick<WidgetState, "infoText" | "infoType">;
 
 export type WeatherState = Pick<
-  AppState,
-  "description" | "tepmerature" | "humidity" | "icon"
+  WidgetState,
+  "description" | "temperature" | "humidity" | "icon"
 >;
+
+export type WeatherTarget = Pick<
+  WidgetState,
+  "description" | "temperature" | "humidity" | "icon"
+>;
+
 export type MapState = Pick<
-  AppState,
+  WidgetState,
   "latitude" | "longitude" | "initZoom" | "maxZoom" | "city" | "country"
 >;
 
-export type AppState = {
-  title: string;
+export type MapTarget = Pick<
+  WidgetState,
+  "latitude" | "longitude" | "city" | "country"
+>;
+
+export type HistoryState = Pick<WidgetState, "itemsCount" | "data">;
+
+export type WidgetState = {
   infoText: string;
   infoType: "info" | "error";
-  tepmerature: string | number;
+  temperature: string | number;
   humidity: string | number;
   description: string;
   icon: string;
   itemsCount: number;
-  data: Array<string>;
+  data: Array<HistoryData>;
   city: string;
   country: string;
   latitude: string | number;
@@ -36,3 +55,7 @@ export type AppState = {
   initZoom: number;
   maxZoom: number;
 };
+
+export interface IMapComponent {
+  setState: (patch: Partial<MapState>) => void;
+}

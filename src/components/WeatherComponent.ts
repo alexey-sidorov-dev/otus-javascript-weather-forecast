@@ -1,3 +1,4 @@
+import { normalizeWeather } from "../helpers/utils";
 import { WeatherState } from "../types/component";
 import { Component } from "./Component";
 
@@ -10,9 +11,13 @@ export class WeatherComponent extends Component<WeatherState> {
     this.setState({ ...this.state, ...initialState });
   }
 
-  setState = (patch: Partial<WeatherState>) => {
+  setState(patch: Partial<WeatherState>): void {
     this.state = { ...this.state, ...patch };
     this.element.innerHTML = this.render();
+  }
+
+  updateState = (data: unknown) => {
+    this.setState(normalizeWeather(data));
   };
 
   protected render(): string {

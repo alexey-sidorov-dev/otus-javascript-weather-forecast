@@ -1,5 +1,4 @@
-import { pull } from "../helpers/utils";
-import { IStorage, HistoryData, StorageConfig } from "../types/history";
+import { IStorage, HistoryData, StorageConfig } from "../types/api";
 
 export class Storage implements IStorage {
   private dataIdentifier: string;

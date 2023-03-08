@@ -58,6 +58,7 @@ export abstract class Component<State = ComponentState> {
     if (idx > -1) this.listeners[ev].splice(idx, 1);
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   protected emit(ev: string, ...args: any[]): void {
     if (typeof this.listeners[ev] !== "object") return;
     [...this.listeners[ev]].forEach((listener) => listener.apply(this, args));

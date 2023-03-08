@@ -1,6 +1,6 @@
 import { Storage } from "../src/api/Storage";
 import { Config } from "../src/config/Config";
-import { HistoryData } from "../src/types/history";
+import { HistoryData } from "../src/types/api";
 
 describe("Storage", () => {
   const config = new Config();

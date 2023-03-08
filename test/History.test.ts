@@ -1,6 +1,6 @@
 import { History } from "../src/api/History";
 import { Config } from "../src/config/Config";
-import { HistoryData } from "../src/types/history";
+import { HistoryData } from "../src/types/api";
 
 describe("History", () => {
   const history = new History(new Config());

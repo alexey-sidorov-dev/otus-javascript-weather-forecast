@@ -1,7 +1,7 @@
 import { HttpError } from "../helpers/HttpError";
 import { DataError } from "../helpers/DataError";
 import { Config } from "../config/Config";
-import { GeoData } from "../types/geo";
+import { GeoData } from "../types/api";
 
 export class Weather {
   private apiUrl: string;

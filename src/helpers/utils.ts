@@ -1,7 +1,5 @@
-import { Config } from "../config/Config";
-import { GenericObject } from "../types/generic";
-import { MapTarget } from "../types/map";
-import { WeatherData } from "../types/weather";
+import { MapTarget, WeatherTarget } from "../types/component";
+import { WeatherData } from "../types/api";
 
 export function setAttributes(
   element: HTMLElement,
@@ -12,56 +10,37 @@ export function setAttributes(
   );
 }
 
-export function getProperty(
-  obj: Record<string, unknown>,
-  path: string,
-  defaultValue?: unknown
-): unknown {
-  const travel = (regexp: RegExp) =>
-    String.prototype.split
-      .call(path, regexp)
-      .filter(Boolean)
-      .reduce(
-        (res: unknown, key: string) =>
-          res !== null && res !== undefined && typeof res === "object"
-            ? (res as Record<string, unknown>)[key]
-            : res,
-        obj
-      );
-  const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
-  return result === undefined || result === obj ? defaultValue : result;
-}
-
-export function pull<T>(sourceArray: T[], ...removeList: T[]): T[] {
-  const removeSet = new Set(removeList);
-
-  return sourceArray.filter((el) => !removeSet.has(el));
-}
-
-export function normalizeTarget(targetData: unknown): MapTarget {
+export function normalizeTarget(weatherData: unknown): MapTarget {
   let normalizedTarget = {};
 
-  if (
-    targetData &&
-    typeof targetData === "object" &&
-    new Config().geoApiUrl.includes("ipgeolocation.io")
-  ) {
+  if (weatherData && typeof weatherData === "object") {
+    const {
+      data: [
+        {
+          country_code: country,
+          lat: latitude,
+          lon: longitude,
+          city_name: city,
+        },
+      ],
+    } = <WeatherData>weatherData;
+
     normalizedTarget = {
       ...normalizedTarget,
-      city: getProperty(<GenericObject>targetData, "data[0].city_name"),
-      country: getProperty(<GenericObject>targetData, "data[0].country_code"),
-      latitude: getProperty(<GenericObject>targetData, "data[0].lat"),
-      longitude: getProperty(<GenericObject>targetData, "data[0].lon"),
+      city,
+      country,
+      longitude,
+      latitude,
     };
   }
 
   return <MapTarget>normalizedTarget;
 }
 
-export function normalizeWeather(weatherData: unknown) {
+export function normalizeWeather(weatherData: unknown): WeatherTarget {
   let normalizedWeather = {};
 
-  if (new Config().weatherApiUrl.includes("weatherbit.io")) {
+  if (weatherData && typeof weatherData === "object") {
     const {
       data: [
         {
@@ -71,6 +50,7 @@ export function normalizeWeather(weatherData: unknown) {
         },
       ],
     } = <WeatherData>weatherData;
+
     normalizedWeather = {
       ...normalizedWeather,
       icon,
@@ -80,5 +60,5 @@ export function normalizeWeather(weatherData: unknown) {
     };
   }
 
-  return normalizedWeather;
+  return <WeatherTarget>normalizedWeather;
 }

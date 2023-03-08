@@ -1,4 +1,4 @@
-import { IHistory, IStorage, HistoryData } from "../types/history";
+import { IHistory, IStorage, HistoryData } from "../types/api";
 import { Config } from "../config/Config";
 import { Storage } from "./Storage";
 
