@@ -37,7 +37,7 @@ export class SearchComponent extends Component<SearchState> {
       } catch (error) {
         this.emit("info:display", {
           infoType: "error",
-          infoText: `При запросе погоды произошла ошибка`,
+          infoText: `При запросе погоды в городе ${this.input.value} произошла ошибка`,
         });
       }
     }

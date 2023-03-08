@@ -14,15 +14,14 @@ export class HistoryComponent extends Component<HistoryState> {
   protected state: HistoryState = {} as HistoryState;
 
   private listItemClick = async (ev: Event) => {
+    const city = (ev.target as HTMLElement).textContent as string;
     try {
       this.emit("search:display", {
         infoType: "info",
-        infoText: `Запрашиваем погоду в городе ${
-          (ev.target as HTMLElement).textContent
-        }...`,
+        infoText: `Запрашиваем погоду в городе ${city}...`,
       });
       const weatherData = await this.weather?.getWeather({
-        city: (ev.target as HTMLElement).textContent as string,
+        city,
       });
 
       const normalizedTarget = normalizeTarget(weatherData);
@@ -36,7 +35,7 @@ export class HistoryComponent extends Component<HistoryState> {
     } catch (error) {
       this.emit("info:display", {
         infoType: "error",
-        infoText: `При запросе погоды произошла ошибка`,
+        infoText: `При запросе погоды в городе ${city} произошла ошибка`,
       });
     }
   };
