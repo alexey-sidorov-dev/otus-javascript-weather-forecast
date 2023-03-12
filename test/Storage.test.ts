@@ -1,11 +1,12 @@
 import { Storage } from "../src/api/Storage";
 import { Config } from "../src/config/Config";
+import { makeDataIdentifier } from "../src/helpers/utils";
 import { HistoryData } from "../src/types/api";
 
 describe("Storage", () => {
   const config = new Config();
   const storage = new Storage({
-    dataIdentifier: config.historyDataIdentifier,
+    dataIdentifier: makeDataIdentifier(config.historyDataIdentifierPrefix),
     itemsCount: config.historyItemsCount,
   });
   const data1: HistoryData = { city: "City1" };

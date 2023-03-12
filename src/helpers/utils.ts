@@ -62,3 +62,11 @@ export function normalizeWeather(weatherData: unknown): WeatherTarget {
 
   return <WeatherTarget>normalizedWeather;
 }
+
+export function makeIdentifier() {
+  return (Date.now() * Math.random()).toString(36).substring(0, 5);
+}
+
+export function makeDataIdentifier(dataIdentifierPrefix: string) {
+  return `${dataIdentifierPrefix}-${makeIdentifier}`;
+}

@@ -1,6 +1,7 @@
 import { IHistory, IStorage, HistoryData } from "../types/api";
 import { Config } from "../config/Config";
 import { Storage } from "./Storage";
+import { makeDataIdentifier } from "../helpers/utils";
 
 export class History implements IHistory {
   private storageType: string;
@@ -13,7 +14,9 @@ export class History implements IHistory {
 
   constructor(config: Config) {
     this.storageType = config.historyStorageType;
-    this.dataIdentifier = config.historyDataIdentifier;
+    this.dataIdentifier = makeDataIdentifier(
+      config.historyDataIdentifierPrefix
+    );
     this.itemsCount = config.historyItemsCount;
     this.storage =
       this.storageType === "localStorage"

@@ -13,17 +13,25 @@ export class Config implements IConfig {
 
   weatherApiUrl: string;
 
-  mapContainerId: string;
-
   mapInitZoom: number;
 
   mapMaxZoom: number;
 
   historyStorageType: string;
 
-  historyDataIdentifier: string;
+  historyDataIdentifierPrefix: string;
 
   historyItemsCount: number;
+
+  searchContainerId: string;
+
+  infoContainerId: string;
+
+  weatherContainerId: string;
+
+  mapContainerId: string;
+
+  historyContainerId: string;
 
   constructor() {
     this.units = "M";
@@ -32,11 +40,15 @@ export class Config implements IConfig {
     this.geoApiUrl = String(process.env.GEO_API_URL);
     this.weatherApiKey = String(process.env.WEATHER_API_KEY);
     this.weatherApiUrl = String(process.env.WEATHER_API_URL);
-    this.mapContainerId = "map";
     this.mapInitZoom = 10;
     this.mapMaxZoom = 17;
     this.historyStorageType = String(process.env.HISTORY_STORAGE_TYPE);
-    this.historyDataIdentifier = "weather";
     this.historyItemsCount = 10;
+    this.historyDataIdentifierPrefix = "weather";
+    this.searchContainerId = "search";
+    this.infoContainerId = "info";
+    this.weatherContainerId = "weather";
+    this.mapContainerId = "map";
+    this.historyContainerId = "history";
   }
 }

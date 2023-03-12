@@ -44,10 +44,10 @@ export class AppComponent extends Component {
     super.onMount();
 
     const searchComponent = new SearchComponent(
-      <HTMLElement>document.getElementById("search")
+      <HTMLElement>document.getElementById(this.config.searchContainerId)
     );
     const infoComponent = new InfoComponent(
-      <HTMLElement>document.getElementById("info"),
+      <HTMLElement>document.getElementById(this.config.infoContainerId),
       {
         infoType: "info",
         infoText: "Запрашиваем погоду в вашем городе...",
@@ -69,15 +69,15 @@ export class AppComponent extends Component {
       });
 
       const weatherComponent = new WeatherComponent(
-        <HTMLElement>document.getElementById("weather"),
+        <HTMLElement>document.getElementById(this.config.weatherContainerId),
         normalizedWeather
       );
       const mapComponent = new MapComponent(
-        <HTMLElement>document.getElementById("map"),
+        <HTMLElement>document.getElementById(this.config.mapContainerId),
         normalizedTarget
       );
       const historyComponent = new HistoryComponent(
-        <HTMLElement>document.getElementById("history")
+        <HTMLElement>document.getElementById(this.config.historyContainerId)
       );
 
       searchComponent.on("info:display", infoComponent.updateState);

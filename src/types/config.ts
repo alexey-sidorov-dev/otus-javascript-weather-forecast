@@ -11,15 +11,23 @@ export interface IConfig {
 
   weatherApiUrl: string;
 
-  mapContainerId: string;
-
   mapInitZoom: number;
 
   mapMaxZoom: number;
 
   historyStorageType: string;
 
-  historyDataIdentifier: string;
+  historyDataIdentifierPrefix: string;
 
   historyItemsCount: number;
+
+  searchContainerId: string;
+
+  infoContainerId: string;
+
+  weatherContainerId: string;
+
+  mapContainerId: string;
+
+  historyContainerId: string;
 }
