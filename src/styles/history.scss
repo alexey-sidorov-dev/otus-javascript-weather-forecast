@@ -1,0 +1,24 @@
+@import "./colors";
+
+.history {
+  align-self: flex-start;
+}
+
+.history-list {
+  margin: 0;
+  list-style: none;
+  color: $second-color;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+
+  &__item {
+    border-bottom: 2px solid $second-color;
+    font-style: italic;
+
+    &:hover {
+      cursor: pointer;
+      color: $main-color;
+      border-bottom: 2px solid $main-color;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "./colors";
+
+.weather {
+  color: $main-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    align-self: start;
+  }
+
+  &__description {
+    margin: 0.5rem;
+  }
+}
